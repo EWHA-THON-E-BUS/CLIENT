@@ -26,12 +26,12 @@ const MainPage = ({ className }) => {
         <Container>
           {theme === "LIGHT" ? (
             <div className="maps">
-              <BusMap id={0} />
-              <BusMap id={1} />
+              <BusMap index={0} />
+              <BusMap index={1} />
             </div>
           ) : (
             <div className="maps">
-              <BusMap id={2} />
+              <BusMap index={2} />
             </div>
           )}
 
