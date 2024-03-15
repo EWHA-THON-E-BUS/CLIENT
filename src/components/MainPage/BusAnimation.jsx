@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Bus } from "../../assets/bus_right.svg";
 
-const BusAnimation = ({ className }) => {
+const BusAnimation = ({ className, isUp }) => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [refresh, setRefresh] = useState(0);
 
@@ -12,8 +12,8 @@ const BusAnimation = ({ className }) => {
       now.getFullYear(),
       now.getMonth(),
       now.getDate(),
-      5,
-      43,
+      6,
+      36,
       0,
     ); // targetTime에 애니메이션 시작
     const timeDiff = targetTime - now;
@@ -54,13 +54,29 @@ const BusAnimation = ({ className }) => {
   }, [refresh]);
   return (
     <>
-      {animationProgress > 0 && animationProgress < 100 && (
-        <AnimationBox progressStatus={`${animationProgress}%`}>
-          <div className={className}>
-            <StyledBus />
-          </div>
-        </AnimationBox>
-      )}
+      {animationProgress > 0 &&
+        animationProgress < 100 &&
+        (isUp ? (
+          <AnimationBox
+            progressStatus={`${animationProgress}%`}
+            style={{ left: 0 }}
+          >
+            <div className={`${className} up`}>
+              <StyledBus />
+            </div>
+          </AnimationBox>
+        ) : (
+          <AnimationBox
+            progressStatus={`-${animationProgress}%`}
+            style={{ right: 0 }}
+          >
+            <div className={`${className} down`}>
+              <StyledBus
+                style={{ right: 0, transform: "scaleX(-1)", top: "-16px" }}
+              />
+            </div>
+          </AnimationBox>
+        ))}
     </>
   );
 };
@@ -69,12 +85,18 @@ export default BusAnimation;
 
 const AnimationBox = styled.div`
   width: calc(100% - 30px);
+  position: absolute;
 
   .ROUTE_0 {
     //연구협력관 상행 노선
     animation-name: move; /* keyframe을 태그에 등록 */
-    animation-duration: 420s; /* 7분 동안 실행 */
+  }
 
+  .up {
+    transform: translateX(${props => props.progressStatus});
+  }
+
+  .down {
     transform: translateX(${props => props.progressStatus});
   }
 `;
