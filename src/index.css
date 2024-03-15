@@ -6,6 +6,8 @@
   --grey3_night: #363b4a;
   --white: #ffffff;
   --black: #07011d;
+
+  font-family: Pretendard-regular;
 }
 
 @media (min-width: 481px) {
