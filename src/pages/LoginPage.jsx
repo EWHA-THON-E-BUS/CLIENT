@@ -19,7 +19,7 @@ const LoginPage = () => {
       <img className="logo" src={logo} alt="logo" />
 
       <div className="login-button" onClick={handlekakaoLogin}>
-        <img src={kakao} className="kakao-icon" alt="" />
+        <img src={kakao} alt="" />
       </div>
     </Wrapper>
   );
