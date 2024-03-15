@@ -1,23 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import BusRoute from "./BusRoute";
-import { maps } from "./maps";
+import { bus_routes } from "./bus_routes";
 // 12.5 25 25 25 12.5
-const BusMap = ({ id }) => {
+const BusMap = ({ index }) => {
   return (
     <Div>
-      <div className="title">{maps[id].title}</div>
+      <div className="title">{bus_routes[index].title}</div>
 
       <div className="map">
-        <BusRoute stops={maps[id].stops} />
+        <BusRoute bus_route={bus_routes[index]} isUp={true} />
 
         <BusStops>
-          {maps[id].stops.map(stop => {
+          {bus_routes[index].stops.map(stop => {
             return <div className="stop">{stop}</div>;
           })}
         </BusStops>
 
-        <BusRoute stops={maps[id].stops} />
+        <BusRoute bus_route={bus_routes[index]} isUp={false} />
       </div>
     </Div>
   );

@@ -5,11 +5,10 @@ import { themeState } from "../../services/store/theme";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 
 const ArrowBtn = ({ title }) => {
-  const [theme, setTheme] = useRecoilState(themeState);
   return (
     <Div>
       {title}
-      {theme === "LIGHT" ? <StyledArrow /> : <StyledArrow />}
+      <StyledArrow />
     </Div>
   );
 };

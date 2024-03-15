@@ -10,9 +10,11 @@ import LostItems from "../components/MainPage/LostItems";
 import { useRecoilValue } from "recoil";
 import { themeState } from "../services/store/theme";
 import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
+  const navigate = useNavigate();
 
   return (
     <Div className={className}>
@@ -24,18 +26,18 @@ const MainPage = ({ className }) => {
         <Container>
           {theme === "LIGHT" ? (
             <div className="maps">
-              <BusMap id={0} />
-              <BusMap id={1} />
+              <BusMap index={0} />
+              <BusMap index={1} />
             </div>
           ) : (
             <div className="maps">
-              <BusMap id={2} />
+              <BusMap index={2} />
             </div>
           )}
 
-          <div className="btn">
+          <div className="btn" onClick={() => navigate("/time-table")}>
             정류장 전체 위치 보기
-            {theme === "LIGHT" ? <StyledArrow /> : <StyledArrow />}
+            <StyledArrow />
           </div>
         </Container>
 

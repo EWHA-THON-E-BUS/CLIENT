@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
-const BusRoute = ({ stops }) => {
+import { ReactComponent as Bus } from "../../assets/bus_right.svg";
+import BusAnimation from "./BusAnimation";
+const BusRoute = ({ bus_route, isUp }) => {
   return (
-    <Line>
-      <DotsContainer>
-        {stops.map(() => {
-          return <Dots />;
-        })}
-      </DotsContainer>
-    </Line>
+    <>
+      <Line>
+        <DotsContainer>
+          {bus_route.stops.map(() => {
+            return <Dots />;
+          })}
+        </DotsContainer>
+
+        <BusAnimation className={bus_route.id} isUp={isUp} />
+      </Line>
+    </>
   );
 };
 
