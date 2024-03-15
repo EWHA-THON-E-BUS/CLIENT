@@ -35,7 +35,7 @@ const MainPage = ({ className }) => {
 
           <div className="btn">
             정류장 전체 위치 보기
-            {theme === "LIGHT" ? <StyledArrow /> : <StyledArrow />}
+            <StyledArrow />
           </div>
         </Container>
 
