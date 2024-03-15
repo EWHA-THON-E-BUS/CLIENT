@@ -13,14 +13,21 @@
     --theme_font: var(--black);
     --theme_jade: var(--jade);
     --theme_bg: var(--white);
-    --theme_grey: var(--grey1);
+
+    --theme_grey1_grey3: var(--grey1);
+    --theme_white_grey3: var(--white);
+    --theme_grey1_grey2: var(--grey1);
   }
 
   .dark {
     --theme_font: var(--grey1);
     --theme_jade: var(--jade_night);
+
     --theme_bg: var(--black);
-    --theme_grey: var(--grey3_night);
+
+    --theme_grey1_grey3: var(--grey3_night);
+    --theme_grey1_grey2: var(--grey2);
+    --theme_white_grey3: var(--grey3_night);
   }
 }
 
