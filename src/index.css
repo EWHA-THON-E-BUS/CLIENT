@@ -1,14 +1,17 @@
+:root {
+  --jade: #80ded0;
+  --jade_night: #64cabb;
+  --grey1: #ededed;
+  --grey2: #646c78;
+  --grey3_night: #363b4a;
+  --white: #ffffff;
+  --black: #07011d;
+}
+
 @media (min-width: 481px) {
   #wrapper {
     width: 481px;
     margin: 0 auto;
-    --jade: #80ded0;
-    --jade_night: #64cabb;
-    --grey1: #ededed;
-    --grey2: #646c78;
-    --grey3_night: #363b4a;
-    --white: #ffffff;
-    --black: #07011d;
   }
 }
 
