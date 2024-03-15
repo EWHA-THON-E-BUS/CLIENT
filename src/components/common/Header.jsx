@@ -58,7 +58,7 @@ export default Header;
 
 const Div = styled.div`
   display: flex;
-  padding: 0 32px 0 24px;
+  padding: 0 32px 8px 24px;
   width: 100%;
   box-sizing: border-box;
   justify-content: space-between;
