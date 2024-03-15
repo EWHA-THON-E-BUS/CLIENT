@@ -10,9 +10,11 @@ import LostItems from "../components/MainPage/LostItems";
 import { useRecoilValue } from "recoil";
 import { themeState } from "../services/store/theme";
 import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
+  const navigate = useNavigate();
 
   return (
     <Div className={className}>
@@ -33,7 +35,7 @@ const MainPage = ({ className }) => {
             </div>
           )}
 
-          <div className="btn">
+          <div className="btn" onClick={() => navigate("/time-table")}>
             정류장 전체 위치 보기
             <StyledArrow />
           </div>
