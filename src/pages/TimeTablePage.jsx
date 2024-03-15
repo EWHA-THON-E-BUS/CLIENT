@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../assets/arrow_bold.svg";
-import TimeTable from "../components/MainPage/TimeTable";
+import TimeTable from "../components/TimeTablePage/TimeTable";
 import { useNavigate } from "react-router-dom";
 
 const TimeTablePage = ({ className }) => {
