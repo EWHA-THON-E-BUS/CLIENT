@@ -1,7 +1,7 @@
 import React from "react";
 
-import logo from "../assets/common/logo_padding.svg";
-import kakao from "../assets/login/kakao.svg";
+import logo_padding from "../assets/logo_padding.svg";
+import kakao from "../assets/kakao.svg";
 import styled from "styled-components";
 
 const LoginPage = () => {
@@ -16,7 +16,7 @@ const LoginPage = () => {
 
   return (
     <Div>
-      <img className="logo" src={logo} alt="logo" />
+      <img className="logo" src={logo_padding} alt="logo" />
 
       <div className="login-button" onClick={handlekakaoLogin}>
         <img src={kakao} alt="" />
