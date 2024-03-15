@@ -3,14 +3,14 @@ import Header from "../components/common/Header";
 import styled from "styled-components";
 import NoticeBanner from "../components/MainPage/NoticeBanner";
 import BusMap from "../components/MainPage/BusMap";
-import arrow_light from "../assets/arrow_light.svg";
-import arrow_light_grey from "../assets/arrow_light_grey.svg";
 import Board from "../components/MainPage/Board";
 import Footer from "../components/common/Footer";
 import MyStopList from "../components/MainPage/MyStopList";
 import LostItems from "../components/MainPage/LostItems";
 import { useRecoilValue } from "recoil";
 import { themeState } from "../services/store/theme";
+import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
+
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
 
@@ -34,12 +34,8 @@ const MainPage = ({ className }) => {
           )}
 
           <div className="btn">
-            정류장 전체 위치 보기{" "}
-            {theme === "LIGHT" ? (
-              <img src={arrow_light} />
-            ) : (
-              <img src={arrow_light_grey} />
-            )}
+            정류장 전체 위치 보기
+            {theme === "LIGHT" ? <StyledArrow /> : <StyledArrow />}
           </div>
         </Container>
 
@@ -94,7 +90,12 @@ const Container = styled.div`
     justify-content: end;
     gap: 4px;
     margin-top: 22px;
+    align-items: center;
 
     color: var(--theme_black_grey2);
   }
+`;
+
+const StyledArrow = styled(Arrow)`
+  fill: var(--theme_black_grey2);
 `;
