@@ -1,6 +1,6 @@
 import React from "react";
 
-import logo from "../assets/common/logo.png";
+import logo from "../assets/common/logo_padding.svg";
 import kakao from "../assets/login/kakao.svg";
 import styled from "styled-components";
 
@@ -15,19 +15,19 @@ const LoginPage = () => {
   };
 
   return (
-    <Wrapper>
+    <Div>
       <img className="logo" src={logo} alt="logo" />
 
       <div className="login-button" onClick={handlekakaoLogin}>
         <img src={kakao} alt="" />
       </div>
-    </Wrapper>
+    </Div>
   );
 };
 
 export default LoginPage;
 
-const Wrapper = styled.div`
+const Div = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
@@ -42,8 +42,7 @@ const Wrapper = styled.div`
   .logo {
     position: absolute;
     top: 30%;
-    width: 120px;
-    height: 60px;
+
     flex-shrink: 0;
   }
 
