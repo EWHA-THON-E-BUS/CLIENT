@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Bus } from "../../assets/bus_right.svg";
 
-const BusAnimation = ({ className, isUp }) => {
+const BusAnimation = ({ className, isUp, time }) => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [refresh, setRefresh] = useState(0);
 
+  const hour = parseInt(time.split(":")[0]);
+  const min = parseInt(time.split(":")[1]);
+
   useEffect(() => {
     const now = new Date();
+
     const targetTime = new Date(
       now.getFullYear(),
       now.getMonth(),
       now.getDate(),
-      6,
-      36,
+      hour,
+      min,
       0,
     ); // targetTime에 애니메이션 시작
     const timeDiff = targetTime - now;
@@ -32,6 +36,9 @@ const BusAnimation = ({ className, isUp }) => {
       // 이미 지정된 시간이 지났을 경우
       const elapsedMilliseconds = Math.abs(timeDiff); // 경과된 시간 계산
       const progress = (elapsedMilliseconds / (7 * 60 * 1000)) * 100; // 애니메이션 진행도 계산
+      if (progress === 0) {
+        setAnimationProgress(0.01);
+      }
       if (progress < 100) {
         setAnimationProgress(progress);
       } else {
@@ -85,7 +92,7 @@ export default BusAnimation;
 
 const AnimationBox = styled.div`
   width: calc(100% - 30px);
-  position: absolute;
+  //position: absolute;
 
   .ROUTE_0 {
     //연구협력관 상행 노선

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BusRoute from "./BusRoute";
 import { bus_routes } from "./bus_routes";
-// 12.5 25 25 25 12.5
+
 const BusMap = ({ index }) => {
   return (
     <Div>

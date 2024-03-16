@@ -12,7 +12,25 @@ const BusRoute = ({ bus_route, isUp }) => {
           })}
         </DotsContainer>
 
-        <BusAnimation className={bus_route.id} isUp={isUp} />
+        {isUp
+          ? bus_route.up_start_time.map(time => {
+              return (
+                <BusAnimation
+                  className={bus_route.id}
+                  isUp={isUp}
+                  time={time}
+                />
+              );
+            })
+          : bus_route.down_start_time.map(time => {
+              return (
+                <BusAnimation
+                  className={bus_route.id}
+                  isUp={isUp}
+                  time={time}
+                />
+              );
+            })}
       </Line>
     </>
   );
