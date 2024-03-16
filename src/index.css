@@ -89,3 +89,14 @@
       format("truetype");
   font-display: swap;
 }
+
+.MuiFormControl-root {
+  position: absolute !important;
+  right: 40px;
+  height: 0px !important;
+  overflow: hidden;
+}
+.MuiFormControl-root * {
+  height: 0px !important;
+  overflow: hidden;
+}
