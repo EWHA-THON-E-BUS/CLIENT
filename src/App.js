@@ -11,12 +11,18 @@ import { useRecoilValue } from "recoil";
 import { themeState } from "./services/store/theme";
 import TimeTablePage from "./pages/TimeTablePage";
 import LoginLoadingPage from "./pages/LoginLoadingPage";
+import { isLoginState } from "./services/store/auth";
+import { PrivateRoute } from "./services/router/PrivateRoute";
 
 function App() {
   const theme = useRecoilValue(themeState);
 
   return (
     <Routes>
+      <Route element={<PrivateRoute />}>
+        {/* 로그인 해야 접근 가능한 페이지 */}
+      </Route>
+
       <Route
         path="/"
         element={<MainPage className={theme === "LIGHT" ? "light" : "dark"} />}
