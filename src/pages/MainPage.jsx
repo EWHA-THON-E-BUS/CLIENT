@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import styled from "styled-components";
 import NoticeBanner from "../components/MainPage/NoticeBanner";
@@ -10,16 +10,36 @@ import LostItems from "../components/MainPage/LostItems";
 import { useRecoilValue } from "recoil";
 import { themeState } from "../services/store/theme";
 import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
+import { getMainData } from "../services/api/main";
 
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
+
+  const [notice, setNotice] = useState([]);
+  const [items, setItems] = useState([]);
+  const [suggestion, setSuggestion] = useState([]);
+  const [appreciation, setAppreciation] = useState([]);
+
+  useEffect(() => {
+    getMainData()
+      .then(res => {
+        console.log(res);
+        setNotice(res.data.notice);
+        setItems(res.data.items);
+        setSuggestion(res.data.suggestion);
+        setAppreciation(res.data.appreciation);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Div className={className}>
       <Header isTheme={true} />
 
       <div className="padding">
-        <NoticeBanner />
+        <NoticeBanner notice={notice[0]} />
 
         <Container>
           {theme === "LIGHT" ? (
@@ -41,11 +61,11 @@ const MainPage = ({ className }) => {
 
         <MyStopList />
 
-        <LostItems />
+        <LostItems list={items} />
 
-        <Board id={0} />
+        <Board id={0} list={suggestion} />
 
-        <Board id={1} />
+        <Board id={1} list={appreciation} />
       </div>
 
       <div className="footer-margin">
