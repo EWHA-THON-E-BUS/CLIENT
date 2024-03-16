@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
+import { postNotice } from "../../services/api/notice";
+import { postPost } from "../../services/api/post";
 
 const Form = () => {
   const isNotice = window.location.pathname.includes("notice");
@@ -10,13 +12,13 @@ const Form = () => {
   const [post, setPost] = useState({ title: "", content: "" });
   const onSubmit = () => {
     if (isNotice) {
-      // 공지 post
-    } else if (isSuggest) {
-      // 건의 Post
-      // nav(`/suggest/${id}`);
+      postNotice(post)
+        .then(res => console.log(res)) // nav(`/notice/${id}`)
+        .catch(res => console.log(res));
     } else {
-      // 감사 Post
-      // nav(`/appreciate/${id}`);
+      postPost(isSuggest ? "suggestion" : "appreciation", post)
+        .then(res => console.log(res)) // nav(`/${isSuggest?'suggest':'appreciate'}/${id}`);
+        .catch(err => console.log(err));
     }
   };
   return (

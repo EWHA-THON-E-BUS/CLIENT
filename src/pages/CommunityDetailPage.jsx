@@ -1,23 +1,55 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DetailTopBar from "../components/LostItemPage/DetailTopBar";
 import profileimg from "../assets/profile_jade.svg";
 import { ReactComponent as EmptyHeart } from "../assets/heart_empty.svg";
 import { ReactComponent as FillHeart } from "../assets/heart_fill.svg";
+import { getNoticeDetail, deleteNotice } from "../services/api/notice";
+import { getPostDetail, deletePost, postHeart } from "../services/api/post";
 
 const CommunityDetailPage = () => {
   const { id } = useParams();
+  const nav = useNavigate();
   const isNotice = window.location.pathname.includes("notice");
   const isSuggest = window.location.pathname.includes("suggest");
-  const handleHeart = () => {};
+  const [item, setItem] = useState({});
+  useEffect(() => {
+    if (isNotice) {
+      getNoticeDetail(id)
+        .then(res => setItem(res.data))
+        .catch(err => console.log(err));
+    } else {
+      getPostDetail(id)
+        .then(res => setItem(res.data))
+        .catch(err => console.log(err));
+    }
+  }, [isNotice, isSuggest, id]);
+  const onDelete = () => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      if (isNotice) {
+        deletePost(id)
+          .then(res => nav("/notice"))
+          .catch(err => console.log(err));
+      } else {
+        deletePost(id)
+          .then(res => nav(`/${isSuggest ? "suggest" : "appreciate"}`))
+          .catch(err => console.log(err));
+      }
+    }
+  };
+  const handleHeart = () => {
+    postHeart(id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
   return (
     <Wrapper>
       <DetailTopBar
         title="건의해요 건의해요 건의해요 건의해요 건의해요건의해요"
         backTo={isNotice ? "/notice" : isSuggest ? "/suggest" : "/appreciate"}
         isMy={true}
-        onDelete={null}
+        onDelete={onDelete}
       />
       <Info>
         <div className="img-circle">

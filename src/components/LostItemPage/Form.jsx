@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { ReactComponent as Add } from "../../assets/plus.svg";
@@ -7,8 +8,10 @@ import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ko";
+import { postItem, getS3ImgUrl } from "../../services/api/item";
 
 const Form = () => {
+  const nav = useNavigate();
   const [post, setPost] = useState({
     title: "",
     image: "",

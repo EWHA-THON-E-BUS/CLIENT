@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import profileimg from "../assets/profile.svg";
 import adminprofileimg from "../assets/profile_jade.svg";
 import DetailTopBar from "../components/LostItemPage/DetailTopBar";
+import { getItemDetail, deleteItem } from "../services/api/item";
 
 const LostItemDetailPage = () => {
+  const { id } = useParams();
+  const nav = useNavigate();
+  const [item, setItem] = useState({});
+  useEffect(() => {
+    getItemDetail(id)
+      .then(res => setItem(res.data))
+      .catch(err => console.log(err));
+  }, [id]);
+  const onDelete = () => {
+    deleteItem(id)
+      .then(res => nav("/lost-item"))
+      .catch(err => console.log(err));
+  };
   return (
     <Wrapper>
       <DetailTopBar
@@ -13,7 +28,7 @@ const LostItemDetailPage = () => {
           ㄱㅇㅎ벗)"
         backTo="/lost-item"
         isMy={true}
-        onDelete={null}
+        onDelete={onDelete}
       />
       <Main>
         <div className="img-rect">
