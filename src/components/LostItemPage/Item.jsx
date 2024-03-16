@@ -2,24 +2,30 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Item = ({ item }) => {
-  // const {} = item;
+export const item = {
+  itemId: 1,
+  writerRole: "ADMIN",
+  title: "분실물 이름 분실물 이름 분실물 이름 분실물 이름이름이름이름이름",
+  image:
+    "https://img.freepik.com/free-photo/cute-puppy-sitting-in-grass-enjoying-nature-playful-beauty-generated-by-artificial-intelligence_188544-84973.jpg",
+  foundDate: "2024-03-15",
+};
+
+const Item = () => {
+  const { itemId, writerRole, title, image, foundDate } = item;
   const nav = useNavigate();
   return (
-    <Container onClick={() => nav(`/lost-item/${1}`)}>
+    <Container onClick={() => nav(`/lost-item/${itemId}`)}>
       <div className="img-rect">
-        <img
-          src={
-            "https://img.freepik.com/free-photo/cute-puppy-sitting-in-grass-enjoying-nature-playful-beauty-generated-by-artificial-intelligence_188544-84973.jpg"
-          }
-          alt="lost-item-image"
-        />
+        <img src={image} alt="lost-item-image" />
       </div>
       <TextSection>
-        <h1>분실물 이름 분실물 이름 분실물 이름 분실물 이름이름이름이름이름</h1>
+        <h1>{title}</h1>
         <div>
-          <p>익명의 벗</p>
-          <p>{"00. 00. 00"} 발견</p>
+          <p className={writerRole === "ADMIN" ? "admin" : ""}>
+            {writerRole === "ADMIN" ? "관리자" : "익명의 벗"}
+          </p>
+          <p>{foundDate} 발견</p>
         </div>
       </TextSection>
     </Container>
@@ -35,6 +41,10 @@ const Container = styled.div`
   border-bottom: 1px solid var(--grey1);
   display: flex;
   gap: 8px;
+
+  * {
+    cursor: default;
+  }
 
   .img-rect {
     width: 64px;
@@ -74,6 +84,9 @@ const TextSection = styled.div`
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    margin-top: 4px;
+    margin: 4px 0 3px 0;
+  }
+  .admin {
+    color: var(--jade_night);
   }
 `;

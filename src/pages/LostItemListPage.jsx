@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Header from "../components/common/Header";
-import TitleSection from "../components/LostItemListPage/TitleSection";
-import SearchBar from "../components/LostItemListPage/SearchBar";
-import Item from "../components/LostItemListPage/Item";
+import TitleSection from "../components/LostItemPage/TitleSection";
+import SearchBar from "../components/LostItemPage/SearchBar";
+import Item from "../components/LostItemPage/Item";
 
 const LostItemListPage = () => {
   const [search, setSearch] = useState({ keyword: "", date: "" });
@@ -16,7 +16,7 @@ const LostItemListPage = () => {
         {search.date.toLocaleString()}
       </p>
       {[0, 0, 0, 0, 0, 0, 0].map(el => (
-        <Item item={el} />
+        <Item item={el} key={0} />
       ))}
     </>
   );
