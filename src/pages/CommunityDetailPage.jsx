@@ -5,7 +5,7 @@ import profileimg from "../assets/profile.svg";
 import { ReactComponent as EmptyHeart } from "../assets/heart_empty.svg";
 import { ReactComponent as FillHeart } from "../assets/heart_fill.svg";
 
-const SuggestAppreciateDetailPage = () => {
+const CommunityDetailPage = () => {
   const isSuggest = window.location.pathname.includes("suggest");
   return (
     <Wrapper>
@@ -41,7 +41,7 @@ const SuggestAppreciateDetailPage = () => {
   );
 };
 
-export default SuggestAppreciateDetailPage;
+export default CommunityDetailPage;
 
 const Wrapper = styled.div`
   width: calc(100% - 48px);

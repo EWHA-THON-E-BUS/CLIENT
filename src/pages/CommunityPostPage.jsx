@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Delete } from "../assets/cancel.svg";
-import Form from "../components/SuggestAppreciatePage/Form";
+import Form from "../components/CommunityPage/Form";
 
-const SuggestAppreciatePostPage = () => {
+const CommunityPostPage = () => {
   const isSuggest = window.location.pathname.includes("suggest");
   const nav = useNavigate();
   return (
@@ -21,7 +21,7 @@ const SuggestAppreciatePostPage = () => {
   );
 };
 
-export default SuggestAppreciatePostPage;
+export default CommunityPostPage;
 
 const Wrapper = styled.div`
   width: calc(100% - 48px);

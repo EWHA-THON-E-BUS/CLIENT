@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
 import TitleSection from "../components/LostItemPage/TitleSection";
-import Item from "../components/SuggestAppreciatePage/Item";
+import Item from "../components/CommunityPage/Item";
 
-const SuggestAppreciateListPage = () => {
+const CommunityListPage = () => {
   const isSuggest = window.location.pathname.includes("suggest");
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -33,4 +33,4 @@ const SuggestAppreciateListPage = () => {
   );
 };
 
-export default SuggestAppreciateListPage;
+export default CommunityListPage;
