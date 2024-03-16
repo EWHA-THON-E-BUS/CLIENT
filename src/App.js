@@ -9,6 +9,7 @@ import SuggestAppreciateDetailPage from "./pages/SuggestAppreciateDetailPage";
 import SuggestAppreciatePostPage from "./pages/SuggestAppreciatePostPage";
 import { useRecoilValue } from "recoil";
 import { themeState } from "./services/store/theme";
+import TimeTablePage from "./pages/TimeTablePage";
 
 function App() {
   const theme = useRecoilValue(themeState);
@@ -18,6 +19,12 @@ function App() {
       <Route
         path="/"
         element={<MainPage className={theme === "LIGHT" ? "light" : "dark"} />}
+      />
+      <Route
+        path="/time-table"
+        element={
+          <TimeTablePage className={theme === "LIGHT" ? "light" : "dark"} />
+        }
       />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/lost-item" element={<LostItemListPage />} />

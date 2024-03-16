@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MyStop from "./MyStop";
 import plus_grey from "../../assets/plus_grey.svg";
+import Modal from "./Modal";
 
 const MyStopList = () => {
+  const [showModal, setShowModal] = useState(false);
+  if (showModal) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
   return (
-    <Div>
-      <MyStop />
-      <MyStop />
-      <img className="plus" src={plus_grey} />
-    </Div>
+    <>
+      {showModal && <Modal setShowModal={setShowModal} />}
+      <Div>
+        <MyStop />
+        <MyStop />
+        <img
+          className="plus"
+          src={plus_grey}
+          onClick={() => setShowModal(!showModal)}
+        />
+      </Div>
+    </>
   );
 };
 
