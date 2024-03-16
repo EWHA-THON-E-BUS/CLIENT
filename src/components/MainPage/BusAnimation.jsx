@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Bus } from "../../assets/bus_right.svg";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { themeState } from "../../services/store/theme";
 
 const BusAnimation = ({ className, isUp, time }) => {
@@ -10,7 +10,7 @@ const BusAnimation = ({ className, isUp, time }) => {
 
   const [animationProgress, setAnimationProgress] = useState(0);
   const [refresh, setRefresh] = useState(0);
-  const [theme, setTheme] = useRecoilState(themeState);
+  const theme = useRecoilValue(themeState);
 
   const hour = parseInt(time.split(":")[0]);
   const min = parseInt(time.split(":")[1]);
