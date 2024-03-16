@@ -13,7 +13,11 @@ const BusMap = ({ index }) => {
 
         <BusStops>
           {bus_routes[index].stops.map(stop => {
-            return <div className="stop">{stop}</div>;
+            return (
+              <div className="stop" style={{ left: `${stop.gap}%` }}>
+                {stop.name}
+              </div>
+            );
           })}
         </BusStops>
 
@@ -35,30 +39,37 @@ const Div = styled.div`
   .map {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 28px;
+    padding: 0 10px;
+    box-sizing: border-box;
   }
 `;
 
 const BusStops = styled.div`
-  display: flex;
-  justify-content: space-between;
+  position: relative;
+
+  height: 0;
+  width: 100%;
+  padding: 0 6px;
+  box-sizing: border-box;
 
   font-size: 12px;
   font-weight: 400;
 
   .stop {
-    margin: auto 0;
-    width: 25%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
     white-space: pre-wrap;
 
     text-align: center;
   }
   .stop:first-child {
-    width: 12.5%;
-    text-align: start;
+    margin-left: 3px;
   }
   .stop:last-child {
-    width: 12.5%;
+    transform: translate(-97%, -50%);
+    position: relative;
     text-align: end;
   }
 `;

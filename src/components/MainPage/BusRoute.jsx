@@ -1,35 +1,38 @@
 import React from "react";
 import styled from "styled-components";
 import BusAnimation from "./BusAnimation";
+
 const BusRoute = ({ bus_route, isUp }) => {
   return (
     <>
       <Line>
         <DotsContainer>
-          {bus_route.stops.map(() => {
-            return <Dots />;
+          {bus_route.stops.map(stop => {
+            return <Dots style={{ left: `${stop.gap}%` }} />;
           })}
         </DotsContainer>
 
-        {isUp
-          ? bus_route.up_start_time.map(time => {
-              return (
-                <BusAnimation
-                  className={bus_route.id}
-                  isUp={isUp}
-                  time={time}
-                />
-              );
-            })
-          : bus_route.down_start_time.map(time => {
-              return (
-                <BusAnimation
-                  className={bus_route.id}
-                  isUp={isUp}
-                  time={time}
-                />
-              );
-            })}
+        <div className="bus">
+          {isUp
+            ? bus_route.up_start_time.map(time => {
+                return (
+                  <BusAnimation
+                    className={bus_route.id}
+                    isUp={isUp}
+                    time={time}
+                  />
+                );
+              })
+            : bus_route.down_start_time.map(time => {
+                return (
+                  <BusAnimation
+                    className={bus_route.id}
+                    isUp={isUp}
+                    time={time}
+                  />
+                );
+              })}
+        </div>
       </Line>
     </>
   );
@@ -46,13 +49,16 @@ const Line = styled.div`
 `;
 
 const Dots = styled.div`
+  position: absolute;
   width: 12px;
   height: 12px;
   border-radius: 100%;
   background: var(--theme_grey1_grey2);
+  transform: translate(-50%, 0);
 `;
 
 const DotsContainer = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
