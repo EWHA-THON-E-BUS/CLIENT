@@ -14,7 +14,7 @@ const Modal = ({ setShowModal }) => {
 
         <div className="grid-box">
           {stops.map(stop => {
-            return <Stop>{stop}</Stop>;
+            return <Stop>{stop.kor}</Stop>;
           })}
         </div>
 

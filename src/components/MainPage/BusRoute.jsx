@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import BusAnimation from "./BusAnimation";
+import { useNavigate } from "react-router-dom";
 
 const BusRoute = ({ bus_route, isUp }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Line>
         <DotsContainer>
           {bus_route.stops.map(stop => {
-            return <Dots style={{ left: `${stop.gap}%` }} />;
+            return (
+              <Dots
+                style={{ left: `${stop.gap}%` }}
+                onClick={() => navigate(`/time-table/${stop.id}`)}
+              />
+            );
           })}
         </DotsContainer>
 

@@ -2,12 +2,13 @@ export const bus_routes = [
   {
     title: "정문 - 연구협력관",
     stops: [
-      { name: "정문", gap: 0 },
-      { name: "포스코관", gap: 28.57 },
-      { name: `공대\n삼거리`, gap: 57.14 },
-      { name: "기숙사\n삼거리", gap: 85.71 },
-      { name: "연구\n협력관", gap: 100 },
+      { name: "정문", gap: 0, id: 1 },
+      { name: "포스코관", gap: 28.57, id: 2 },
+      { name: `공대\n삼거리`, gap: 57.14, id: 3 },
+      { name: "기숙사\n삼거리", gap: 85.71, id: 4 },
+      { name: "연구\n협력관", gap: 100, id: 5 },
     ],
+
     id: "ROUTE_0",
     up_start_time: [
       "7:50",
@@ -214,10 +215,10 @@ export const bus_routes = [
   {
     title: "정문 - 한우리집",
     stops: [
-      { name: "정문", gap: 0 },
-      { name: "포스코관", gap: 28.57 },
-      { name: `공대\n삼거리`, gap: 57.14 },
-      { name: "한우리집", gap: 100 },
+      { name: "정문", gap: 0, id: 1 },
+      { name: "포스코관", gap: 28.57, id: 2 },
+      { name: `공대\n삼거리`, gap: 57.14, id: 3 },
+      { name: "한우리집", gap: 100, id: 6 },
     ],
     id: "ROUTE_1",
     up_start_time: [
@@ -262,10 +263,10 @@ export const bus_routes = [
   {
     title: "기숙사 야간 노선",
     stops: [
-      { name: "조형대\n삼거리", gap: 0 },
-      { name: "포스코관", gap: 28.57 },
-      { name: `한우리집\n주차장`, gap: 85.71 },
-      { name: "이하\n우스", gap: 100 },
+      { name: "조형대\n삼거리", gap: 0, id: 8 },
+      { name: "포스코관", gap: 28.57, id: 2 },
+      { name: `한우리집\n주차장`, gap: 85.71, id: 6 },
+      { name: "이하\n우스", gap: 100, id: 7 },
     ],
     id: "ROUTE_2",
     up_start_time: [

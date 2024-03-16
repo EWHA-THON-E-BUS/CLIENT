@@ -22,7 +22,7 @@ function App() {
         element={<MainPage className={theme === "LIGHT" ? "light" : "dark"} />}
       />
       <Route
-        path="/time-table"
+        path="/time-table/:id"
         element={
           <TimeTablePage className={theme === "LIGHT" ? "light" : "dark"} />
         }

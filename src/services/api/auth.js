@@ -5,8 +5,8 @@ export const postAuthCode = async code => {
     const response = await client.post(`/auth/login`, {
       code: code,
     });
-    return response;
+    return Promise.resolve(response);
   } catch (error) {
-    return error;
+    return Promise.resolve(error);
   }
 };

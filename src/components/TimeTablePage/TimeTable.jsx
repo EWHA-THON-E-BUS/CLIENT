@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getAllTime } from "../../services/api/stops";
+import { useParams } from "react-router-dom";
+import { stops } from "../MainPage/stops";
 
 const TimeTable = () => {
+  const { id } = useParams();
+  console.log(id);
+  const [downs, setDowns] = useState([]);
+  const [ups, setUps] = useState([]);
+
+  useEffect(() => {
+    getAllTime(id).then(res => {
+      setDowns(res.data.downs);
+      setUps(res.data.ups);
+    });
+  }, []);
+
+  const getKorByEng = eng => {
+    const stop = stops.find(stop => stop.eng === eng);
+    return stop ? stop.kor : null;
+  };
+
   return (
     <Table>
       <thead>
@@ -11,48 +31,26 @@ const TimeTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <div className="container">
-              <div className="stop">한우리집</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-          <td>
-            <div className="container">
-              <div className="stop">정문</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="container">
-              <div className="stop">한우리집</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-          <td>
-            <div className="container">
-              <div className="stop">정문</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="container">
-              <div className="stop">한우리집</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-          <td>
-            <div className="container">
-              <div className="stop">정문</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-        </tr>
+        {downs.map((down, index) => (
+          <tr key={index}>
+            <td>
+              <div className="container">
+                <div className="stop">{getKorByEng(down.route)}</div>
+                <div className="time">{down.time.replace(/:00$/, "")}</div>
+              </div>
+            </td>
+            <td>
+              {ups[index] && (
+                <div className="container">
+                  <div className="stop">{getKorByEng(ups[index].route)}</div>
+                  <div className="time">
+                    {ups[index].time.replace(/:00$/, "")}
+                  </div>
+                </div>
+              )}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );
