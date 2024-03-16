@@ -60,6 +60,7 @@ const MainPage = ({ className }) => {
 export default MainPage;
 
 const Div = styled.div`
+  font-variant-numeric: lining-nums tabular-nums;
   width: 100%;
   background: var(--theme_bg);
   color: var(--theme_font);

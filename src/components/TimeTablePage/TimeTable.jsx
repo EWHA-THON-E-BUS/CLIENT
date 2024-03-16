@@ -63,6 +63,7 @@ export default TimeTable;
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  font-variant-numeric: lining-nums tabular-nums;
 
   th {
     padding: 8px 0px;
