@@ -198,6 +198,7 @@ const Input = styled.input`
   border-bottom: 1px solid var(--black);
   padding: 8px;
   padding-bottom: 6px;
+  font-family: Pretendard-regular;
 `;
 
 const Submit = styled.div`

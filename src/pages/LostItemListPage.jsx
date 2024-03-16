@@ -9,15 +9,20 @@ const LostItemListPage = () => {
   return (
     <>
       <Header />
-      <TitleSection />
+      <TitleSection
+        title="분실물"
+        text="분실물 제보하기"
+        moveTo="/lost-item/new"
+      />
       <SearchBar search={search} setSearch={setSearch} />
       <p>
         {search.keyword}
         {search.date.toLocaleString()}
       </p>
-      {[0, 0, 0, 0, 0, 0, 0].map(el => (
+      {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(el => (
         <Item item={el} key={0} />
       ))}
+      <br />
     </>
   );
 };

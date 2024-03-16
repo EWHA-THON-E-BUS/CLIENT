@@ -46,7 +46,6 @@ const SearchBar = ({ search, setSearch }) => {
           <Calendar onClick={() => setIsOpen(true)} />
         </div>
       </Container>
-      <Border />
       <DatePicker
         open={isOpen}
         onClose={() => setIsOpen(false)}
@@ -61,7 +60,7 @@ export default SearchBar;
 
 const Container = styled.form`
   width: calc(100% - 64px);
-  margin: 0 24px;
+  margin: 8px 24px 16px 24px;
   padding: 8px;
   background-color: var(--jade);
   color: var(--black);
@@ -105,11 +104,4 @@ const Input = styled.input`
   font-style: normal;
   font-weight: 400;
   width: 100%;
-`;
-
-const Border = styled.div`
-  width: calc(100% - 48px);
-  margin: 0 24px;
-  margin-top: 16px;
-  border-bottom: 1px solid var(--grey1);
 `;

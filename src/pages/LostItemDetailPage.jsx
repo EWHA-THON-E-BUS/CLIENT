@@ -1,23 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ReactComponent as Arrow } from "../assets/arrow_bold.svg";
-import { ReactComponent as Delete } from "../assets/cancel.svg";
 import profileimg from "../assets/profile.svg";
 import adminprofileimg from "../assets/profile_jade.svg";
+import DetailTopBar from "../components/LostItemPage/DetailTopBar";
 
 const LostItemDetailPage = () => {
-  const nav = useNavigate();
-  const onDelete = () => {};
   return (
     <Wrapper>
-      <Title>
-        <div className="inner">
-          <Arrow className="arrow" onClick={() => nav("/lost-item")} />
-          <p>초록색 이화 반지갑 (컴공 ㄱㅇㅎ벗)</p>
-        </div>
-        {true && <Delete className="delete" onClick={onDelete} />}
-      </Title>
+      <DetailTopBar
+        title="초록색 이화 반지갑 (컴공 ㄱㅇㅎ벗)초록색 이화 반지갑 (컴공
+          ㄱㅇㅎ벗)초록색 이화 반지갑 (컴공 ㄱㅇㅎ벗)초록색 이화 반지갑 (컴공
+          ㄱㅇㅎ벗)"
+        backTo="/lost-item"
+        isMy={true}
+        onDelete={null}
+      />
       <Main>
         <div className="img-rect">
           <img
@@ -66,30 +63,6 @@ const Wrapper = styled.div`
     cursor: pointer;
     flex-shrink: 0;
     padding: 0 8px;
-  }
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-top: 35px;
-  .inner {
-    display: flex;
-    align-items: center;
-  }
-  .arrow {
-    transform: rotate(180deg);
-    height: 14px;
-  }
-  p {
-    color: var(--black);
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-  }
-  .delete {
-    padding-top: 12px;
   }
 `;
 

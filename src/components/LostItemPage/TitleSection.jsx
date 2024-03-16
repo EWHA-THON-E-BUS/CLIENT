@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 
-const TitleSection = () => {
+const TitleSection = ({ title, text, moveTo }) => {
   const nav = useNavigate();
   return (
-    <Container>
-      <p>분실물</p>
-      <NavBtn onClick={() => nav("/lost-item/new")}>
-        <p>분실물 제보하기</p>
+    <Container $border={!(title === "분실물")}>
+      <p>{title}</p>
+      <NavBtn onClick={() => nav(moveTo)}>
+        <p>{text}</p>
         <Arrow fill="var(--black)" />
       </NavBtn>
     </Container>
@@ -20,10 +20,12 @@ export default TitleSection;
 
 const Container = styled.div`
   width: calc(100% - 64px);
-  margin: 8px 32px;
+  margin: 0 24px;
+  padding: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: ${props => (props.$border ? "1px solid var(--black)" : "0")};
   & > p {
     color: var(--black);
     font-family: Pretendard;

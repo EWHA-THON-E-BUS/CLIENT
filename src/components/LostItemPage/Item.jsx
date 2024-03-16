@@ -38,7 +38,7 @@ const Container = styled.div`
   width: calc(100% - 64px);
   margin: 0 24px;
   padding: 8px;
-  border-bottom: 1px solid var(--grey1);
+  border-top: 1px solid var(--grey1);
   display: flex;
   gap: 8px;
 
