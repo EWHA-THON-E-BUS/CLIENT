@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
-import { ReactComponent as Delete } from "../../assets/cancel.svg";
+import { ReactComponent as Delete } from "../../assets/delete.svg";
 
 const DetailTopBar = ({ title, backTo, isMy, onDelete }) => {
   const nav = useNavigate();

@@ -1,17 +1,21 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import DetailTopBar from "../components/LostItemPage/DetailTopBar";
-import profileimg from "../assets/profile.svg";
+import profileimg from "../assets/profile_jade.svg";
 import { ReactComponent as EmptyHeart } from "../assets/heart_empty.svg";
 import { ReactComponent as FillHeart } from "../assets/heart_fill.svg";
 
-const SuggestAppreciateDetailPage = () => {
+const CommunityDetailPage = () => {
+  const { id } = useParams();
+  const isNotice = window.location.pathname.includes("notice");
   const isSuggest = window.location.pathname.includes("suggest");
+  const handleHeart = () => {};
   return (
     <Wrapper>
       <DetailTopBar
         title="건의해요 건의해요 건의해요 건의해요 건의해요건의해요"
-        backTo={isSuggest ? "/suggest" : "/appreciate"}
+        backTo={isNotice ? "/notice" : isSuggest ? "/suggest" : "/appreciate"}
         isMy={true}
         onDelete={null}
       />
@@ -19,11 +23,11 @@ const SuggestAppreciateDetailPage = () => {
         <div className="img-circle">
           <img src={profileimg} alt="profile" />
         </div>
-        <p>익명의 벗</p>
+        <p>관리자</p>
         <p>0000-00-00</p>
-        <Heart>
-          <EmptyHeart />
-          {"9999"}
+        <Heart onClick={handleHeart}>
+          {"12"}
+          {false ? <FillHeart /> : <EmptyHeart />}
         </Heart>
       </Info>
       <Content>
@@ -41,7 +45,7 @@ const SuggestAppreciateDetailPage = () => {
   );
 };
 
-export default SuggestAppreciateDetailPage;
+export default CommunityDetailPage;
 
 const Wrapper = styled.div`
   width: calc(100% - 48px);
@@ -61,6 +65,7 @@ const Info = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--black);
+  position: relative;
   .img-circle {
     width: 20px;
     height: 20px;
@@ -95,15 +100,19 @@ const Content = styled.div`
 `;
 
 const Heart = styled.div`
+  position: absolute;
+  right: 8px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
   color: var(--jade);
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   svg {
+    width: 22px;
+    height: 20px;
     padding: 0;
-    cursor: default;
   }
 `;
