@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { ReactComponent as Bus } from "../../assets/bus_right.svg";
 
 const BusAnimation = ({ className, isUp, time }) => {
+  const bodyWidth = document.body.clientWidth;
+  document.documentElement.style.setProperty("--body-width", `${bodyWidth}px`);
+
   const [animationProgress, setAnimationProgress] = useState(0);
   const [refresh, setRefresh] = useState(0);
 
@@ -49,9 +52,10 @@ const BusAnimation = ({ className, isUp, time }) => {
     const intervalId = setInterval(() => {
       setAnimationProgress(prevProgress => {
         if (0 < prevProgress && prevProgress < 100) {
-          // console.log(prevProgress);
+          console.log(prevProgress);
           return prevProgress + 100 / (7 * 60); // 1초마다 진행도 갱신
         }
+
         clearInterval(intervalId); // 애니메이션이 완료되면 interval 제거
         return 0;
       });
@@ -64,22 +68,17 @@ const BusAnimation = ({ className, isUp, time }) => {
       {animationProgress > 0 &&
         animationProgress < 100 &&
         (isUp ? (
-          <AnimationBox
-            progressStatus={`${animationProgress}%`}
-            style={{ left: 0 }}
-          >
-            <div className={`${className} up`}>
-              <StyledBus />
+          <AnimationBox style={{ left: 0 }}>
+            <div>
+              <StyledBus progressStatus={animationProgress} />
             </div>
           </AnimationBox>
         ) : (
-          <AnimationBox
-            progressStatus={`-${animationProgress}%`}
-            style={{ right: 0 }}
-          >
-            <div className={`${className} down`}>
-              <StyledBus
-                style={{ right: 0, transform: "scaleX(-1)", top: "-16px" }}
+          <AnimationBox style={{ right: 0 }}>
+            <div>
+              <StyledDownBus
+                progressStatus={animationProgress}
+                style={{ right: 0, top: "-16px" }}
               />
             </div>
           </AnimationBox>
@@ -92,24 +91,31 @@ export default BusAnimation;
 
 const AnimationBox = styled.div`
   width: calc(100% - 30px);
-  //position: absolute;
-
-  .ROUTE_0 {
-    //연구협력관 상행 노선
-    animation-name: move; /* keyframe을 태그에 등록 */
-  }
-
-  .up {
-    transform: translateX(${props => props.progressStatus});
-  }
-
-  .down {
-    transform: translateX(${props => props.progressStatus});
-  }
 `;
 
 const StyledBus = styled(Bus)`
   position: absolute;
   top: 0;
-  transform: translate(0%, -100%);
+  //상행
+
+  transform: translate(
+    calc(
+      (var(--body-width) - 48px - 30px) * ${props => props.progressStatus} / 100
+    ),
+    -100%
+  );
+`;
+
+const StyledDownBus = styled(Bus)`
+  position: absolute;
+  top: 0;
+  //하행
+  transform: translate(
+      calc(
+        (var(--body-width) - 48px - 30px) * ${props => props.progressStatus} /
+          100 * -1
+      ),
+      0%
+    )
+    scaleX(-1);
 `;

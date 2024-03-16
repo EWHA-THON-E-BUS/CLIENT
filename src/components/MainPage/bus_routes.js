@@ -106,7 +106,7 @@ export const bus_routes = [
       "20:55",
       "21:00",
     ],
-    down_start_time: [],
+    down_start_time: ["15:58"],
   },
   {
     title: "정문 - 한우리집",
