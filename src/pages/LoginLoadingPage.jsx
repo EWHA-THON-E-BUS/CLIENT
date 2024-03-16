@@ -12,19 +12,14 @@ const LoginLoadingPage = () => {
       .then(res => {
         if (res.status === 201) {
           localStorage.setItem("token", res.data.accessToken);
-          alert("로그인 성공");
-          navigate("/", {
-            onComplete: () => {
-              // 이동이 완료된 후에 새로고침
-              window.location.reload();
-            },
-          });
-        } else {
-          alert("로그인에 실패하였습니다.");
-          // navigate("/login");
+          navigate("/");
+          window.location.reload();
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        alert("로그인에 실패하였습니다.");
+        navigate("/login");
+      });
   }, []);
 
   return <div>로그인 중...</div>;
