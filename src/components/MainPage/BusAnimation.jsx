@@ -15,6 +15,15 @@ const BusAnimation = ({ className, isUp, time }) => {
   useEffect(() => {
     const now = new Date();
 
+    // const test = new Date(
+    //   now.getFullYear(),
+    //   now.getMonth(),
+    //   now.getDate(),
+    //   19,
+    //   55,
+    //   0,
+    // ); //
+
     const targetTime = new Date(
       now.getFullYear(),
       now.getMonth(),
@@ -23,6 +32,8 @@ const BusAnimation = ({ className, isUp, time }) => {
       min,
       0,
     ); // targetTime에 애니메이션 시작
+
+    // const timeDiff = targetTime - test;
     const timeDiff = targetTime - now;
 
     if (timeDiff > 0) {
@@ -96,6 +107,7 @@ const AnimationBox = styled.div`
 const StyledBus = styled(Bus)`
   position: absolute;
   top: 0;
+  fill: var(--theme_black_jade_night);
   //상행
 
   transform: translate(
@@ -109,6 +121,7 @@ const StyledBus = styled(Bus)`
 const StyledDownBus = styled(Bus)`
   position: absolute;
   top: 0;
+  fill: var(--theme_black_jade_night);
   //하행
   transform: translate(
       calc(
