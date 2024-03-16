@@ -1,27 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MyStop from "./MyStop";
 import plus_grey from "../../assets/plus_grey.svg";
 import Modal from "./Modal";
+import { getPinnedStops } from "../../services/api/stops";
 
 const MyStopList = () => {
   const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(0);
+  const [pinnedStops, setPinnedStops] = useState([]);
   if (showModal) {
     document.body.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "auto";
   }
+
+  useEffect(() => {
+    getPinnedStops().then(res => {
+      setPinnedStops(res.data.stopId);
+    });
+  }, [refresh]);
   return (
     <>
-      {showModal && <Modal setShowModal={setShowModal} />}
-      <Div>
-        <MyStop />
-        <MyStop />
-        <img
-          className="plus"
-          src={plus_grey}
-          onClick={() => setShowModal(!showModal)}
+      {showModal && (
+        <Modal
+          setShowModal={setShowModal}
+          pinnedStops={pinnedStops}
+          setPinnedStops={setPinnedStops}
         />
+      )}
+      <Div>
+        {pinnedStops.map(id => {
+          return (
+            <MyStop
+              key={id}
+              stopId={id}
+              pinnedStops={pinnedStops}
+              setPinnedStops={setPinnedStops}
+            />
+          );
+        })}
+
+        {pinnedStops.length < 3 && (
+          <img
+            className="plus"
+            src={plus_grey}
+            onClick={() => setShowModal(!showModal)}
+          />
+        )}
       </Div>
     </>
   );

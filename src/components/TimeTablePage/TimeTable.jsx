@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getAllTime } from "../../services/api/stops";
 import { useParams } from "react-router-dom";
 import { stops } from "../MainPage/stops";
+import { getKorByEng } from "../MainPage/bus_routes";
 
 const TimeTable = () => {
   const { id } = useParams();
@@ -23,11 +24,6 @@ const TimeTable = () => {
       }
     });
   }, []);
-
-  const getKorByEng = eng => {
-    const stop = stops.find(stop => stop.eng === eng);
-    return stop ? stop.kor : null;
-  };
 
   return (
     <>

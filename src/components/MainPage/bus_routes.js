@@ -1,3 +1,10 @@
+import { stops } from "./stops";
+
+export const getKorByEng = eng => {
+  const stop = stops.find(stop => stop.eng === eng);
+  return stop ? stop.kor : null;
+};
+
 export const bus_routes = [
   {
     title: "정문 - 연구협력관",
@@ -282,7 +289,7 @@ export const bus_routes = [
       "20:40",
       "20:50",
       "21:00",
-      "21:10",
+      "21:10", //평일은 21:10시작
       "21:20",
       "21:30",
       "21:40",
@@ -312,7 +319,7 @@ export const bus_routes = [
       "20:50",
       "21:00",
       "21:10",
-      "21:20",
+      "21:20", //평일 시작
       "21:30",
       "21:40",
       "21:50",

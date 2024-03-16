@@ -24,6 +24,7 @@ const Header = ({ isTheme }) => {
     if (theme === "DARK") {
       localStorage.setItem("theme", "LIGHT");
       setTheme("LIGHT");
+
       return;
     }
 

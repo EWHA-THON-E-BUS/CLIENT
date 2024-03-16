@@ -1,8 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { stops } from "./stops";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
-const Modal = ({ setShowModal }) => {
+import { postPinnedStops } from "../../services/api/stops";
+const Modal = ({ setShowModal, pinnedStops, setPinnedStops }) => {
+  const [selectedList, setSelectedList] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  useEffect(() => {
+    //렌더링 시 현재 핀되어있는 정류장 배열에 반영
+    if (pinnedStops) {
+      const temp = [...selectedList];
+      pinnedStops.forEach(id => {
+        temp[id - 1] = true;
+      });
+      setSelectedList(temp);
+    }
+  }, []);
+
+  const handleSelect = index => {
+    setSelectedList(prevSelectedList => {
+      const updatedList = [...prevSelectedList];
+      // 선택된 정류장 개수가 3개를 초과하는 경우 마지막으로 선택된 정류장을 해제합니다.
+
+      updatedList[index] = !updatedList[index];
+
+      let selectedCount = updatedList.filter(item => item === true).length;
+
+      if (selectedCount > 3) {
+        alert("정류장은 최대 3개 선택 가능합니다.");
+        const lastSelectedIndex = updatedList.lastIndexOf(true);
+        updatedList[lastSelectedIndex] = false;
+      }
+
+      return updatedList;
+    });
+  };
+
+  const handlePost = () => {
+    postPinnedStops(selectedList)
+      .then(res => {
+        if (res.status === 200) {
+          setPinnedStops(res.data.stopId);
+          setShowModal(false);
+        }
+      })
+      .catch(err => {
+        alert("오류 발생");
+      });
+  };
+
   return (
     <>
       <Bg onClick={() => setShowModal(false)}></Bg>
@@ -13,12 +68,20 @@ const Modal = ({ setShowModal }) => {
         </div>
 
         <div className="grid-box">
-          {stops.map(stop => {
-            return <Stop>{stop.kor}</Stop>;
+          {stops.map((stop, index) => {
+            return (
+              <Stop
+                key={index}
+                onClick={() => handleSelect(index)}
+                selected={selectedList[index]}
+              >
+                {stop.kor}
+              </Stop>
+            );
           })}
         </div>
 
-        <Btn>
+        <Btn onClick={handlePost}>
           선택완료 <StyledArrow />
         </Btn>
       </Div>
@@ -81,9 +144,10 @@ const Stop = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+  background: ${({ selected }) =>
+    selected ? "var(--theme_jade)" : "var(--theme_grey1_grey3)"};
 
   border-radius: 4px;
-  background: var(--theme_grey1_grey3);
 
   font-size: 14px;
   font-weight: 600;

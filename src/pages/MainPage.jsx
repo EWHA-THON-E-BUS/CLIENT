@@ -11,9 +11,12 @@ import { useRecoilValue } from "recoil";
 import { themeState } from "../services/store/theme";
 import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
 import { getMainData } from "../services/api/main";
+import { getPinnedStops } from "../services/api/stops";
+import { isLoginState } from "../services/store/auth";
 
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
+  const isLogin = useRecoilValue(isLoginState);
 
   const [notice, setNotice] = useState([]);
   const [items, setItems] = useState([]);
@@ -59,7 +62,7 @@ const MainPage = ({ className }) => {
           </div>
         </Container>
 
-        <MyStopList />
+        {isLogin && <MyStopList />}
 
         <LostItems list={items} />
 
