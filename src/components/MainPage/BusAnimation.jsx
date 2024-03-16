@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as Bus } from "../../assets/bus_right.svg";
+import { useRecoilState } from "recoil";
+import { themeState } from "../../services/store/theme";
 
 const BusAnimation = ({ className, isUp, time }) => {
   const bodyWidth = document.body.clientWidth;
@@ -8,6 +10,7 @@ const BusAnimation = ({ className, isUp, time }) => {
 
   const [animationProgress, setAnimationProgress] = useState(0);
   const [refresh, setRefresh] = useState(0);
+  const [theme, setTheme] = useRecoilState(themeState);
 
   const hour = parseInt(time.split(":")[0]);
   const min = parseInt(time.split(":")[1]);
@@ -73,7 +76,7 @@ const BusAnimation = ({ className, isUp, time }) => {
     }, 1000); // 1초마다 애니메이션 진행도 갱신
 
     return () => clearInterval(intervalId); // 컴포넌트가 언마운트되면 interval 제거
-  }, [refresh]);
+  }, [refresh, theme]);
   return (
     <>
       {animationProgress > 0 &&
