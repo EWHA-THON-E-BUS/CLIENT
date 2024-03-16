@@ -4,11 +4,14 @@ import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 
 const Form = () => {
+  const isNotice = window.location.pathname.includes("notice");
   const isSuggest = window.location.pathname.includes("suggest");
   const nav = useNavigate();
   const [post, setPost] = useState({ title: "", content: "" });
   const onSubmit = () => {
-    if (isSuggest) {
+    if (isNotice) {
+      // 공지 post
+    } else if (isSuggest) {
       // 건의 Post
       // nav(`/suggest/${id}`);
     } else {
@@ -18,14 +21,20 @@ const Form = () => {
   };
   return (
     <>
-      <SubTitle>{isSuggest ? "건의 제목" : "글 제목"}</SubTitle>
+      <SubTitle>
+        {isNotice ? "공지사항" : isSuggest ? "건의" : "글"}
+        {" 제목"}
+      </SubTitle>
       <Input
         placeholder="제목을 입력하세요"
         maxLength={30}
         value={post.title}
         onChange={e => setPost({ ...post, title: e.target.value })}
       />
-      <SubTitle>{isSuggest ? "건의 내용" : "글 내용"}</SubTitle>
+      <SubTitle>
+        {isNotice ? "공지사항" : isSuggest ? "건의" : "글"}
+        {" 내용"}
+      </SubTitle>
       <Textarea
         placeholder="내용을 입력하세요"
         maxLength={100}
@@ -33,7 +42,10 @@ const Form = () => {
         onChange={e => setPost({ ...post, content: e.target.value })}
       />
       <Submit onClick={onSubmit}>
-        <p>{isSuggest ? "건의 완료하기" : "글 작성 완료하기"}</p>
+        <p>
+          {isNotice ? "작성" : isSuggest ? "건의" : "글 작성"}
+          {" 완료하기"}
+        </p>
         <Arrow />
       </Submit>
     </>

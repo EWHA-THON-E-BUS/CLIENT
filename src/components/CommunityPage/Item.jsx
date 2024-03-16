@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { ReactComponent as EmptyHeart } from "../../assets/heart_empty.svg";
 
 export const item = {
+  noticeId: 1,
   postId: 2,
   title:
     "제목30자제목30자제목30자제목30자제목30자제목30자제목30자제목30자제목30자",
@@ -12,19 +13,24 @@ export const item = {
 };
 
 const Item = ({ type, isFirst }) => {
-  const { postId, title, createdDate, heartCount } = item;
+  const { postId, noticeId, title, createdDate, heartCount } = item;
   const nav = useNavigate();
   return (
     <Container
       onClick={() =>
-        nav(type === "suggest" ? `/suggest/${postId}` : `/appreciate/${postId}`)
+        nav(
+          type === "notice"
+            ? `/notice/${noticeId}`
+            : type === "suggest"
+            ? `/suggest/${postId}`
+            : `/appreciate/${postId}`,
+        )
       }
       $isfirst={isFirst}
+      $isnotice={type === "notice"}
     >
-      <TextSection>
-        <h1>{title}</h1>
-        <div>
-          <p>익명의 벗</p>
+      {type === "notice" ? (
+        <TextSection>
           <p>
             {new Date(createdDate).toLocaleString("ko-KR", {
               year: "2-digit",
@@ -32,12 +38,27 @@ const Item = ({ type, isFirst }) => {
               day: "2-digit",
             })}
           </p>
-        </div>
-        <Heart>
-          <EmptyHeart />
-          {"9999"}
-        </Heart>
-      </TextSection>
+          <h1>{title}</h1>
+        </TextSection>
+      ) : (
+        <TextSection>
+          <h1>{title}</h1>
+          <div>
+            <p>익명의 벗</p>
+            <p>
+              {new Date(createdDate).toLocaleString("ko-KR", {
+                year: "2-digit",
+                month: "2-digit",
+                day: "2-digit",
+              })}
+            </p>
+          </div>
+          <Heart>
+            <EmptyHeart />
+            {heartCount}
+          </Heart>
+        </TextSection>
+      )}
     </Container>
   );
 };
@@ -46,12 +67,11 @@ export default Item;
 
 const Container = styled.div`
   width: calc(100% - 64px);
-  height: 64px;
+  height: ${props => (props.$isnotice ? "38px" : "64px")};
   margin: 0 24px;
-  padding: 8px;
+  padding: 10px 8px;
   border-top: ${props => (props.$isfirst ? "0" : "1px solid var(--grey1)")};
   display: flex;
-  gap: 8px;
   position: relative;
 
   * {

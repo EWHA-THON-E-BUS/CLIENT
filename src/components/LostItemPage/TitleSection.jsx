@@ -8,10 +8,12 @@ const TitleSection = ({ title, text, moveTo }) => {
   return (
     <Container $border={!(title === "분실물")}>
       <p>{title}</p>
-      <NavBtn onClick={() => nav(moveTo)}>
-        <p>{text}</p>
-        <Arrow fill="var(--black)" />
-      </NavBtn>
+      {((title === "공지사항" && true) || title !== "공지사항") && (
+        <NavBtn onClick={() => nav(moveTo)}>
+          <p>{text}</p>
+          <Arrow fill="var(--black)" />
+        </NavBtn>
+      )}
     </Container>
   );
 };
