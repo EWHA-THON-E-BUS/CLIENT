@@ -40,22 +40,22 @@ const TimeTable = () => {
             </tr>
           </thead>
           <tbody>
-            {downs.map((down, index) => (
+            {ups.map((up, index) => (
               <tr key={index}>
                 <td>
                   <div className="container">
-                    <div className="stop">{getKorByEng(down.route)}</div>
-                    <div className="time">{down.time.replace(/:00$/, "")}</div>
+                    <div className="stop">{getKorByEng(up.route)}</div>
+                    <div className="time">{up.time.replace(/:00$/, "")}</div>
                   </div>
                 </td>
                 <td>
-                  {ups[index] && (
+                  {downs[index] && (
                     <div className="container">
                       <div className="stop">
-                        {getKorByEng(ups[index].route)}
+                        {getKorByEng(downs[index].route)}
                       </div>
                       <div className="time">
-                        {ups[index].time.replace(/:00$/, "")}
+                        {downs[index].time.replace(/:00$/, "")}
                       </div>
                     </div>
                   )}
