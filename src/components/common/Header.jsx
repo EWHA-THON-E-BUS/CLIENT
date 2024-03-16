@@ -1,13 +1,16 @@
 import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo_padding from "../../assets/logo_padding.svg";
 import logo_padding_white from "../../assets/logo_padding_white.svg";
 import day from "../../assets/day.svg";
 import night from "../../assets/night.svg";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { themeState } from "../../services/store/theme";
+import { isLoginState } from "../../services/store/auth";
 
 const Header = ({ isTheme }) => {
+  const isLogin = useRecoilValue(isLoginState);
   const [theme, setTheme] = useRecoilState(themeState);
 
   const handleToggleTheme = () => {
@@ -20,6 +23,8 @@ const Header = ({ isTheme }) => {
     localStorage.setItem("theme", "DARK");
     setTheme("DARK");
   };
+
+  const nav = useNavigate();
 
   return (
     <Div>
@@ -46,10 +51,17 @@ const Header = ({ isTheme }) => {
           </div>
         )
       ) : (
-        <img src={logo_padding} alt="" />
+        <img src={logo_padding} alt="" onClick={() => nav("/")} />
       )}
 
-      <div className="login">로그인</div>
+      <div
+        className="login"
+        onClick={() =>
+          isLogin ? localStorage.removeItem("token") : nav("/login")
+        }
+      >
+        {isLogin ? "로그아웃" : "로그인"}
+      </div>
     </Div>
   );
 };
@@ -70,6 +82,7 @@ const Div = styled.div`
 
     .theme-btn {
       padding-top: 8px;
+      cursor: pointer;
     }
   }
 
@@ -81,5 +94,6 @@ const Div = styled.div`
     font-size: 14px;
 
     padding-bottom: 7px;
+    cursor: pointer;
   }
 `;
