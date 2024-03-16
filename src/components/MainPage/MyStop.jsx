@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import minus from "../../assets/minus.svg";
-import refresh from "../../assets/refresh.svg";
+import refresh_svg from "../../assets/refresh.svg";
 import { getTime, postPinnedStops } from "../../services/api/stops";
 import { getKorByEng } from "./bus_routes";
 import { stops } from "./stops";
@@ -13,6 +13,8 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
   const [ups, setUps] = useState([]);
   const [downs, setDowns] = useState([]);
 
+  const [refresh, setRefresh] = useState(false);
+
   useEffect(() => {
     //렌더링 시 현재 핀되어있는 정류장 배열에 반영
     if (pinnedStops) {
@@ -22,7 +24,9 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
       });
       setSelectedList(temp);
     }
+  }, []);
 
+  useEffect(() => {
     getTime(stopId)
       .then(res => {
         setUps(res.data.ups);
@@ -31,7 +35,7 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [refresh]);
 
   const deletePinnedStop = () => {
     // 클릭시 삭제
@@ -59,7 +63,7 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
           <img src={minus} onClick={deletePinnedStop} />
         </div>
 
-        <img src={refresh} />
+        <img src={refresh_svg} onClick={() => setRefresh(!refresh)} />
       </Top>
 
       <Bottom>
