@@ -7,14 +7,56 @@ import LostItemPostPage from "./pages/LostItemPostPage";
 import CommunityListPage from "./pages/CommunityListPage";
 import CommunityDetailPage from "./pages/CommunityDetailPage";
 import CommunityPostPage from "./pages/CommunityPostPage";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { themeState } from "./services/store/theme";
 import TimeTablePage from "./pages/TimeTablePage";
 import LoginLoadingPage from "./pages/LoginLoadingPage";
 import { PrivateRoute } from "./services/router/PrivateRoute";
+import { useEffect } from "react";
 
 function App() {
-  const theme = useRecoilValue(themeState);
+  const [theme, setTheme] = useRecoilState(themeState);
+
+  //평일은 21시부터 다크모드, 토요일,일요일은 19시부터 다크모드
+  const now = new Date();
+
+  const handleThemeSetTime = (hour, min) => {
+    const targetTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      hour,
+      min,
+      0,
+    ); // targetTime에 다크모드 설정
+
+    const timeDiff = targetTime - now;
+
+    if (timeDiff > 0) {
+      // 시간이 아직 지나지 않았을 경우
+      const timeoutId = setTimeout(() => {
+        // 지정된 시간이 지난 후에 다크모드 시작
+        setTheme("DARK");
+        localStorage.setItem("theme", "DARK");
+      }, timeDiff);
+
+      return () => clearTimeout(timeoutId); // cleanup 함수에서 타임아웃 제거
+    } else {
+      //이미 시간이 지났으면
+      setTheme("DARK");
+      localStorage.setItem("theme", "DARK");
+    }
+  };
+
+  useEffect(() => {
+    if (now.getDay() === 6 && now.getDay() === 0) {
+      //토요일
+      handleThemeSetTime(19, 0);
+    } else if (now.getDay > 0) {
+      //평일일 경우
+      handleThemeSetTime(21, 0);
+    }
+  }, []);
 
   return (
     <Routes>
