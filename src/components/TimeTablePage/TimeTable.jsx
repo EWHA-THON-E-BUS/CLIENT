@@ -10,10 +10,17 @@ const TimeTable = () => {
   const [downs, setDowns] = useState([]);
   const [ups, setUps] = useState([]);
 
+  const [isEmpty, setIsEmpty] = useState(false);
+
   useEffect(() => {
     getAllTime(id).then(res => {
+      console.log(res);
       setDowns(res.data.downs);
       setUps(res.data.ups);
+
+      if (!res.data.downs.length || !res.data.ups.length) {
+        setIsEmpty(true);
+      }
     });
   }, []);
 
@@ -23,36 +30,44 @@ const TimeTable = () => {
   };
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>상행</th>
-          <th>하행</th>
-        </tr>
-      </thead>
-      <tbody>
-        {downs.map((down, index) => (
-          <tr key={index}>
-            <td>
-              <div className="container">
-                <div className="stop">{getKorByEng(down.route)}</div>
-                <div className="time">{down.time.replace(/:00$/, "")}</div>
-              </div>
-            </td>
-            <td>
-              {ups[index] && (
-                <div className="container">
-                  <div className="stop">{getKorByEng(ups[index].route)}</div>
-                  <div className="time">
-                    {ups[index].time.replace(/:00$/, "")}
+    <>
+      {!isEmpty ? (
+        <Table>
+          <thead>
+            <tr>
+              <th>상행</th>
+              <th>하행</th>
+            </tr>
+          </thead>
+          <tbody>
+            {downs.map((down, index) => (
+              <tr key={index}>
+                <td>
+                  <div className="container">
+                    <div className="stop">{getKorByEng(down.route)}</div>
+                    <div className="time">{down.time.replace(/:00$/, "")}</div>
                   </div>
-                </div>
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+                </td>
+                <td>
+                  {ups[index] && (
+                    <div className="container">
+                      <div className="stop">
+                        {getKorByEng(ups[index].route)}
+                      </div>
+                      <div className="time">
+                        {ups[index].time.replace(/:00$/, "")}
+                      </div>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <Empty>금일 운행 정보가 없습니다</Empty>
+      )}
+    </>
   );
 };
 
@@ -107,4 +122,13 @@ const Table = styled.table`
     display: flex;
     justify-content: space-between;
   }
+`;
+
+const Empty = styled.div`
+  width: 100%;
+  height: 80vh;
+  padding-top: 50%;
+  text-align: center;
+
+  background: var(--theme_bg);
 `;
