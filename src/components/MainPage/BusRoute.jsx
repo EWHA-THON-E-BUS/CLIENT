@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Bus } from "../../assets/bus_right.svg";
 import BusAnimation from "./BusAnimation";
 const BusRoute = ({ bus_route, isUp }) => {
   return (
