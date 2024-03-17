@@ -13,10 +13,11 @@ import TimeTablePage from "./pages/TimeTablePage";
 import LoginLoadingPage from "./pages/LoginLoadingPage";
 import { PrivateRoute } from "./services/router/PrivateRoute";
 import { useEffect } from "react";
+import { dayState } from "./services/store/bus";
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
-
+  const day = useRecoilValue(dayState);
   //평일은 21시부터 다크모드, 토요일,일요일은 19시부터 다크모드
   const now = new Date();
 
@@ -49,10 +50,10 @@ function App() {
   };
 
   useEffect(() => {
-    if (now.getDay() === 6 && now.getDay() === 0) {
-      //토요일
+    if (day === "saturday" && day === "sunday") {
+      //주말
       handleThemeSetTime(19, 0);
-    } else if (now.getDay > 0) {
+    } else if (day === "weekday") {
       //평일일 경우
       handleThemeSetTime(21, 0);
     }
