@@ -74,7 +74,11 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
               <div className="row">
                 <div className="stop">{getKorByEng(up.route)}</div>
                 <div className="time">
-                  <LeftTime time={up.time} />
+                  <LeftTime
+                    time={up.time}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  />
                 </div>
               </div>
             );
@@ -88,7 +92,11 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
               <div className="row">
                 <div className="stop">{getKorByEng(down.route)}</div>
                 <div className="time">
-                  <LeftTime time={down.time} />
+                  <LeftTime
+                    time={down.time}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  />
                 </div>
               </div>
             );
