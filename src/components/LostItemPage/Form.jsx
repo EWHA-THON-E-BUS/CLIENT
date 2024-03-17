@@ -41,7 +41,6 @@ const Form = () => {
   let Formdata = require("form-data");
   const data = new Formdata();
   const onSubmit = () => {
-    console.log(post);
     if (
       post.title !== "" &&
       post.foundDate !== "" &&
@@ -210,6 +209,11 @@ const Field = styled.div`
     height: 130px;
     overflow: hidden;
     border-radius: 2px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 `;
 

@@ -24,7 +24,7 @@ const CommunityListPage = () => {
     <>
       <Header />
       <TitleSection
-        title={isNotice ? "공지사항" : isSuggest ? "건의해요" : "감사해요"}
+        title={isNotice ? "공지사항" : isSuggest ? "건의해요" : "고마워요"}
         text={
           isNotice
             ? "공지사항 작성하기"

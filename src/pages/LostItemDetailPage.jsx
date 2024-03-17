@@ -30,7 +30,6 @@ const LostItemDetailPage = () => {
     foundLocation,
     depository,
   } = item;
-  console.log(item);
   return (
     <>
       {item && (
