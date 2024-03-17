@@ -122,7 +122,6 @@ const Table = styled.table`
 
 const Empty = styled.div`
   width: 100%;
-  height: 80vh;
   padding-top: 50%;
   text-align: center;
 

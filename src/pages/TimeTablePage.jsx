@@ -26,6 +26,7 @@ export default TimeTablePage;
 
 const Div = styled.div`
   width: 100%;
+  height: 100svh;
   background: var(--theme_bg);
   color: var(--theme_font);
 

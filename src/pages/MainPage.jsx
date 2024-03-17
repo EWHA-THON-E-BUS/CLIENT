@@ -83,6 +83,7 @@ export default MainPage;
 const Div = styled.div`
   font-variant-numeric: lining-nums tabular-nums;
   width: 100%;
+  height: 100svh;
   background: var(--theme_bg);
   color: var(--theme_font);
 
