@@ -66,7 +66,6 @@ const BusAnimation = ({ isUp, time }) => {
     const intervalId = setInterval(() => {
       setAnimationProgress(prevProgress => {
         if (0 < prevProgress && prevProgress < 100) {
-          console.log(prevProgress);
           return prevProgress + 100 / (7 * 60); // 1초마다 진행도 갱신
         }
 
