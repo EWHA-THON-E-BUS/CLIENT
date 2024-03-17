@@ -14,7 +14,7 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
   const [ups, setUps] = useState([]);
   const [downs, setDowns] = useState([]);
 
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     //렌더링 시 현재 핀되어있는 정류장 배열에 반영
@@ -64,7 +64,7 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
           <img src={minus} onClick={deletePinnedStop} />
         </div>
 
-        <img src={refresh_svg} onClick={() => setRefresh(!refresh)} />
+        <img src={refresh_svg} onClick={() => setRefresh(refresh + 1)} />
       </Top>
 
       <Bottom>
