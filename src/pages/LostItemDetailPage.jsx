@@ -20,50 +20,56 @@ const LostItemDetailPage = () => {
       .then(res => nav("/lost-item"))
       .catch(err => console.log(err));
   };
+  const {
+    title,
+    itemId,
+    writerRole,
+    image,
+    foundDate,
+    foundTime,
+    foundLocation,
+    depository,
+  } = item;
+  console.log(item);
   return (
-    <Wrapper>
-      <DetailTopBar
-        title="초록색 이화 반지갑 (컴공 ㄱㅇㅎ벗)초록색 이화 반지갑 (컴공
-          ㄱㅇㅎ벗)초록색 이화 반지갑 (컴공 ㄱㅇㅎ벗)초록색 이화 반지갑 (컴공
-          ㄱㅇㅎ벗)"
-        backTo="/lost-item"
-        isMy={true}
-        onDelete={onDelete}
-      />
-      <Main>
-        <div className="img-rect">
-          <img
-            src={
-              "https://blog.kakaocdn.net/dn/tEMUl/btrDc6957nj/NwJoDw0EOapJNDSNRNZK8K/img.jpg"
-            }
-            alt="lost-item-detail-image"
-          />
-        </div>
-        <Profile>
-          <div className="img-circle">
-            <img src={false ? profileimg : adminprofileimg} alt="profile" />
-          </div>
-          <p className={true ? "admin" : ""}>
-            {false ? "익명의 벗" : "관리자"}
-          </p>
-        </Profile>
-        {[
-          { text: "발견 날짜", item: "0000-00-00" },
-          {
-            text: "발견 시간",
-            item: "3시 15분, 5교시 끝난 쉬는시간3시 15분, 5교시 끝난 쉬는시간3시 15분, 5교시 끝난 쉬는시간3시 15",
-          },
-          { text: "발견 위치", item: "셔틀 셋째 줄 의자 아래" },
-          { text: "맡긴 위치", item: "기사님께 맡겼어요" },
-        ].map(el => (
-          <Info key={el.text}>
-            <p>{el.text}</p>
-            <div className="border" />
-            <p>{el.item}</p>
-          </Info>
-        ))}
-      </Main>
-    </Wrapper>
+    <>
+      {item && (
+        <Wrapper>
+          <DetailTopBar title={title} isMy={true} onDelete={onDelete} />
+          <Main>
+            <div className="img-rect">
+              <img src={image} alt="lost-item-detail-image" />
+            </div>
+            <Profile>
+              <div className="img-circle">
+                <img
+                  src={writerRole === "ADMIN" ? adminprofileimg : profileimg}
+                  alt="profile"
+                />
+              </div>
+              <p className={writerRole === "ADMIN" ? "admin" : ""}>
+                {writerRole === "ADMIN" ? "관리자" : "익명의 벗"}
+              </p>
+            </Profile>
+            {[
+              { text: "발견 날짜", item: foundDate },
+              {
+                text: "발견 시간",
+                item: foundTime,
+              },
+              { text: "발견 위치", item: foundLocation },
+              { text: "맡긴 위치", item: depository },
+            ].map(el => (
+              <Info key={el.text}>
+                <p>{el.text}</p>
+                <div className="border" />
+                <p>{el.item}</p>
+              </Info>
+            ))}
+          </Main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

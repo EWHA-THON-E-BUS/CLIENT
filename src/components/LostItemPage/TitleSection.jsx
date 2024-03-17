@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
@@ -6,15 +6,16 @@ import { getMember } from "../../services/api/member";
 
 const TitleSection = ({ title, text, moveTo }) => {
   const nav = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     getMember()
-      .then(res => console.log(res.data))
+      .then(res => setIsAdmin(res.data === "ADMIN"))
       .catch(err => console.log(err));
   }, []);
   return (
     <Container $border={!(title === "분실물")}>
       <p>{title}</p>
-      {((title === "공지사항" && true) || title !== "공지사항") && (
+      {((title === "공지사항" && isAdmin) || title !== "공지사항") && (
         <NavBtn onClick={() => nav(moveTo)}>
           <p>{text}</p>
           <Arrow fill="var(--black)" />

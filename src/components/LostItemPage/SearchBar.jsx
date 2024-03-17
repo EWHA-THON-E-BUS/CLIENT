@@ -6,6 +6,7 @@ import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ko";
+import dayjs from "dayjs";
 
 const SearchBar = ({ search, setSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,8 +50,13 @@ const SearchBar = ({ search, setSearch }) => {
       <DatePicker
         open={isOpen}
         onClose={() => setIsOpen(false)}
-        value={search.date}
-        onChange={value => setSearch({ ...search, date: value })}
+        value={dayjs(search.date)}
+        onChange={value => {
+          setSearch({
+            ...search,
+            date: value,
+          });
+        }}
       />
     </LocalizationProvider>
   );

@@ -9,10 +9,25 @@ const LostItemListPage = () => {
   const [search, setSearch] = useState({ keyword: "", date: "" });
   const [items, setItems] = useState([]);
   useEffect(() => {
-    getItems(search)
+    getItems({
+      ...search,
+      date: search.date
+        ? `${
+            new Date(search.date)
+              .toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+              .split(". ")
+              .join("-")
+              .split(".")[0]
+          }`
+        : "",
+    })
       .then(res => setItems(res.data))
       .catch(err => console.log(err));
-  }, []);
+  }, [search]);
   return (
     <>
       <Header />
@@ -22,7 +37,7 @@ const LostItemListPage = () => {
         moveTo="/lost-item/new"
       />
       <SearchBar search={search} setSearch={setSearch} />
-      {items && items.map(el => <Item item={el} key={0} />)}
+      {items && items.map(el => <Item item={el} key={el.itemId} />)}
       <br />
     </>
   );

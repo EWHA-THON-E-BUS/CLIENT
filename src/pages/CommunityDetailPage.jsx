@@ -8,6 +8,7 @@ import { ReactComponent as EmptyHeart } from "../assets/heart_empty.svg";
 import { ReactComponent as FillHeart } from "../assets/heart_fill.svg";
 import { getNoticeDetail, deleteNotice } from "../services/api/notice";
 import { getPostDetail, deletePost, postHeart } from "../services/api/post";
+import { getMember } from "../services/api/member";
 
 const CommunityDetailPage = () => {
   const { id } = useParams();
@@ -16,6 +17,12 @@ const CommunityDetailPage = () => {
   const isSuggest = window.location.pathname.includes("suggest");
   const [item, setItem] = useState({});
   const [trigger, setTrigger] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    getMember()
+      .then(res => setIsAdmin(res.data))
+      .catch(err => console.log(err));
+  }, []);
   useEffect(() => {
     if (isNotice) {
       getNoticeDetail(id)
@@ -30,7 +37,7 @@ const CommunityDetailPage = () => {
   const onDelete = () => {
     if (window.confirm("삭제하시겠습니까?")) {
       if (isNotice) {
-        deletePost(id)
+        deleteNotice(id)
           .then(res => nav("/notice"))
           .catch(err => console.log(err));
       } else {
@@ -47,14 +54,11 @@ const CommunityDetailPage = () => {
   };
   return (
     <>
-      {item.post && item.member && (
+      {((isNotice && item) || (!isNotice && item.post && item.member)) && (
         <Wrapper>
           <DetailTopBar
-            title={item.post.title}
-            backTo={
-              isNotice ? "/notice" : isSuggest ? "/suggest" : "/appreciate"
-            }
-            isMy={item.member.isWriter}
+            title={isNotice ? item.title : item.post.title}
+            isMy={isNotice ? isAdmin : item.member.isWriter}
             onDelete={onDelete}
           />
           <Info>
@@ -65,7 +69,11 @@ const CommunityDetailPage = () => {
               />
             </div>
             <p>{isNotice ? "관리자" : "익명의 벗"}</p>
-            <p>{new Date(item.post.createdDate).toLocaleDateString()}</p>
+            <p>
+              {new Date(
+                isNotice ? item.createdDate : item.post.createdDate,
+              ).toLocaleDateString()}
+            </p>
             {!isNotice && (
               <Heart onClick={handleHeart}>
                 {item.heartCount}
@@ -73,7 +81,7 @@ const CommunityDetailPage = () => {
               </Heart>
             )}
           </Info>
-          <Content>{item.post.content}</Content>
+          <Content>{isNotice ? item.content : item.post.content}</Content>
         </Wrapper>
       )}
     </>
