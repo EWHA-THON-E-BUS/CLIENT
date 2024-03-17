@@ -25,7 +25,7 @@ const BusRoute = ({ bus_route, isUp }) => {
     }
 
     //test
-    //setDay("weekday");
+    setDay("weekday");
   }, []);
 
   return (

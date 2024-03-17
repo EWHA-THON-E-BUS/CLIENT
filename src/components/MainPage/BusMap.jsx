@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import BusRoute from "./BusRoute";
 import { bus_routes } from "./bus_routes";
 
 const BusMap = ({ index }) => {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    const mapElement = mapRef.current;
+
+    if (mapElement) {
+      const mapWidth = mapElement.offsetWidth;
+      document.documentElement.style.setProperty(
+        "--map-width",
+        `${mapWidth}px`,
+      );
+    }
+  }, []);
+
   return (
     <Div>
       <div className="title">{bus_routes[index].title}</div>
 
-      <div className="map">
+      <div className="map" ref={mapRef}>
         <BusRoute bus_route={bus_routes[index]} isUp={true} />
 
         <BusStops>
