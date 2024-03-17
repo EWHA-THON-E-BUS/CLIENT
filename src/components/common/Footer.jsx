@@ -14,7 +14,8 @@ export default Footer;
 
 const Div = styled.div`
   display: flex;
-  min-width: 481px;
+  width: 100%;
+  max-width: 481px;
   box-sizing: border-box;
   box-sizing: border-box;
   padding: 16px 24px;
