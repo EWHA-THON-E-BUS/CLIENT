@@ -21,6 +21,7 @@ const TimeTable = () => {
       setUps(res.data.ups);
       res.data.closestDown && setClosestDown(res.data.closestDown.time);
       res.data.closestUp && setClosestUp(res.data.closestUp.time);
+      console.log(res);
       // setDowns([
       //   { route: "HANWOORI", time: "12:31" },
       //   { route: "HANWOORI", time: "12:32" },
@@ -57,8 +58,9 @@ const TimeTable = () => {
                     <div className="time">{up.time.replace(/:00$/, "")}</div>
                   </div>
                 </Container>
-                <Container isClosest={downs[index].time === closestDown}>
-                  {downs[index] && (
+
+                {downs[index] && (
+                  <Container isClosest={downs[index].time === closestDown}>
                     <div className="container">
                       <div className="stop">
                         {getKorByEng(downs[index].route)}
@@ -67,8 +69,8 @@ const TimeTable = () => {
                         {downs[index].time.replace(/:00$/, "")}
                       </div>
                     </div>
-                  )}
-                </Container>
+                  </Container>
+                )}
               </tr>
             ))}
           </tbody>
