@@ -1,19 +1,30 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import logo_padding from "../../assets/logo_padding.svg";
 import logo_padding_white from "../../assets/logo_padding_white.svg";
 import day from "../../assets/day.svg";
 import night from "../../assets/night.svg";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { themeState } from "../../services/store/theme";
+import { isLoginState } from "../../services/store/auth";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ isTheme }) => {
   const [theme, setTheme] = useRecoilState(themeState);
+  const isLogin = useRecoilValue(isLoginState);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
 
   const handleToggleTheme = () => {
     if (theme === "DARK") {
       localStorage.setItem("theme", "LIGHT");
       setTheme("LIGHT");
+
       return;
     }
 
@@ -46,10 +57,18 @@ const Header = ({ isTheme }) => {
           </div>
         )
       ) : (
-        <img src={logo_padding} alt="" />
+        <img src={logo_padding} alt="" onClick={() => navigate("/")} />
       )}
 
-      <div className="login">로그인</div>
+      {!isLogin ? (
+        <div className="login" onClick={() => navigate("/login")}>
+          로그인
+        </div>
+      ) : (
+        <div className="login" onClick={handleLogout}>
+          로그아웃
+        </div>
+      )}
     </Div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import styled from "styled-components";
 import NoticeBanner from "../components/MainPage/NoticeBanner";
@@ -10,18 +10,39 @@ import LostItems from "../components/MainPage/LostItems";
 import { useRecoilValue } from "recoil";
 import { themeState } from "../services/store/theme";
 import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
-import { useNavigate } from "react-router-dom";
+import { getMainData } from "../services/api/main";
+import { getPinnedStops } from "../services/api/stops";
+import { isLoginState } from "../services/store/auth";
 
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
-  const navigate = useNavigate();
+  const isLogin = useRecoilValue(isLoginState);
+
+  const [notice, setNotice] = useState([]);
+  const [items, setItems] = useState([]);
+  const [suggestion, setSuggestion] = useState([]);
+  const [appreciation, setAppreciation] = useState([]);
+
+  useEffect(() => {
+    getMainData()
+      .then(res => {
+        console.log(res);
+        setNotice(res.data.notice);
+        setItems(res.data.items);
+        setSuggestion(res.data.suggestion);
+        setAppreciation(res.data.appreciation);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Div className={className}>
       <Header isTheme={true} />
 
       <div className="padding">
-        <NoticeBanner />
+        <NoticeBanner notice={notice[0]} />
 
         <Container>
           {theme === "LIGHT" ? (
@@ -35,19 +56,19 @@ const MainPage = ({ className }) => {
             </div>
           )}
 
-          <div className="btn" onClick={() => navigate("/time-table")}>
+          <div className="btn">
             정류장 전체 위치 보기
             <StyledArrow />
           </div>
         </Container>
 
-        <MyStopList />
+        {isLogin && <MyStopList />}
 
-        <LostItems />
+        <LostItems list={items} />
 
-        <Board id={0} />
+        <Board id={0} list={suggestion} />
 
-        <Board id={1} />
+        <Board id={1} list={appreciation} />
       </div>
 
       <div className="footer-margin">
@@ -60,6 +81,7 @@ const MainPage = ({ className }) => {
 export default MainPage;
 
 const Div = styled.div`
+  font-variant-numeric: lining-nums tabular-nums;
   width: 100%;
   background: var(--theme_bg);
   color: var(--theme_font);

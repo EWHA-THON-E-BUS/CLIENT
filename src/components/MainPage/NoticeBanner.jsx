@@ -1,13 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const NoticeBanner = () => {
+const NoticeBanner = ({ notice }) => {
   return (
     <Div>
-      <div className="date">2024-00-00</div>
-      <div className="title">
-        오늘 아침 밥을 꼭 먹고 나오도록 하세요. 안 먹으면 배고프니까
-      </div>
+      {notice ? (
+        <>
+          <div className="date">{notice.createdDate.split("T")[0]}</div>
+          <div className="title">{notice.title}</div>
+        </>
+      ) : (
+        <>
+          <div className="date">{new Date().toJSON().split("T")[0]}</div>
+          <div className="title">등록된 공지가 없어요</div>
+        </>
+      )}
     </Div>
   );
 };

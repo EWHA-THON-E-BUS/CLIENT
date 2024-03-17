@@ -1,60 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getAllTime } from "../../services/api/stops";
+import { useParams } from "react-router-dom";
+import { stops } from "../MainPage/stops";
+import { getKorByEng } from "../MainPage/bus_routes";
 
 const TimeTable = () => {
+  const { id } = useParams();
+  console.log(id);
+  const [downs, setDowns] = useState([]);
+  const [ups, setUps] = useState([]);
+
+  const [isEmpty, setIsEmpty] = useState(false);
+
+  useEffect(() => {
+    getAllTime(id).then(res => {
+      console.log(res);
+      setDowns(res.data.downs);
+      setUps(res.data.ups);
+
+      if (!res.data.downs.length || !res.data.ups.length) {
+        setIsEmpty(true);
+      }
+    });
+  }, []);
+
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>상행</th>
-          <th>하행</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div className="container">
-              <div className="stop">한우리집</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-          <td>
-            <div className="container">
-              <div className="stop">정문</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="container">
-              <div className="stop">한우리집</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-          <td>
-            <div className="container">
-              <div className="stop">정문</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div className="container">
-              <div className="stop">한우리집</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-          <td>
-            <div className="container">
-              <div className="stop">정문</div>
-              <div className="time">12:30</div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </Table>
+    <>
+      {!isEmpty ? (
+        <Table>
+          <thead>
+            <tr>
+              <th>상행</th>
+              <th>하행</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ups.map((up, index) => (
+              <tr key={index}>
+                <td>
+                  <div className="container">
+                    <div className="stop">{getKorByEng(up.route)}</div>
+                    <div className="time">{up.time.replace(/:00$/, "")}</div>
+                  </div>
+                </td>
+                <td>
+                  {downs[index] && (
+                    <div className="container">
+                      <div className="stop">
+                        {getKorByEng(downs[index].route)}
+                      </div>
+                      <div className="time">
+                        {downs[index].time.replace(/:00$/, "")}
+                      </div>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <Empty>금일 운행 정보가 없습니다</Empty>
+      )}
+    </>
   );
 };
 
@@ -63,6 +72,7 @@ export default TimeTable;
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
+  font-variant-numeric: lining-nums tabular-nums;
 
   th {
     padding: 8px 0px;
@@ -108,4 +118,13 @@ const Table = styled.table`
     display: flex;
     justify-content: space-between;
   }
+`;
+
+const Empty = styled.div`
+  width: 100%;
+  height: 80vh;
+  padding-top: 50%;
+  text-align: center;
+
+  background: var(--theme_bg);
 `;
