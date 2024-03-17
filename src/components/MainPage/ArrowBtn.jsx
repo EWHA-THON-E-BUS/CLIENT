@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 
-const ArrowBtn = ({ title }) => {
+const ArrowBtn = ({ title, onClick }) => {
   return (
-    <Div>
+    <Div onClick={onClick}>
       {title}
       <StyledArrow />
     </Div>
