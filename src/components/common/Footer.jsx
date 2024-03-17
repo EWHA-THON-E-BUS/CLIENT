@@ -13,9 +13,6 @@ const Footer = () => {
 export default Footer;
 
 const Div = styled.div`
-  position: absolute;
-  bottom: 0;
-
   display: flex;
   min-width: 481px;
   box-sizing: border-box;
