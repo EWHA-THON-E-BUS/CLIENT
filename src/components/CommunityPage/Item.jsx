@@ -12,7 +12,7 @@ export const item = {
   heartCount: 12,
 };
 
-const Item = ({ type, isFirst }) => {
+const Item = ({ type, item, isFirst }) => {
   const { postId, noticeId, title, createdDate, heartCount } = item;
   const nav = useNavigate();
   return (

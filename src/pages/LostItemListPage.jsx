@@ -1,11 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import TitleSection from "../components/LostItemPage/TitleSection";
 import SearchBar from "../components/LostItemPage/SearchBar";
 import Item from "../components/LostItemPage/Item";
+import { getItems } from "../services/api/item";
 
 const LostItemListPage = () => {
   const [search, setSearch] = useState({ keyword: "", date: "" });
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    getItems({
+      ...search,
+      date: search.date
+        ? `${
+            new Date(search.date)
+              .toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+              .split(". ")
+              .join("-")
+              .split(".")[0]
+          }`
+        : "",
+    })
+      .then(res => setItems(res.data))
+      .catch(err => console.log(err));
+  }, [search]);
   return (
     <>
       <Header />
@@ -15,13 +37,7 @@ const LostItemListPage = () => {
         moveTo="/lost-item/new"
       />
       <SearchBar search={search} setSearch={setSearch} />
-      <p>
-        {search.keyword}
-        {search.date.toLocaleString()}
-      </p>
-      {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(el => (
-        <Item item={el} key={0} />
-      ))}
+      {items && items.map(el => <Item item={el} key={el.itemId} />)}
       <br />
     </>
   );
