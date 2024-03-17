@@ -2,15 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import ArrowBtn from "./ArrowBtn";
 
-const Board = ({ id }) => {
+const Board = ({ id, list }) => {
   return (
     <Div>
       <ArrowBtn title={id === 0 ? "건의해요" : "고마워요"} />
 
       <Container>
-        <div className="row">버스가 배차를 늘려주세요.</div>
-        <div className="row">버스가 배차를 늘려주세요.</div>
-        <div className="row">버스가 배차를 늘려주세요.</div>
+        {list.map(el => {
+          return (
+            <div key={el.postId} className="row">
+              {el.title}
+            </div>
+          );
+        })}
       </Container>
     </Div>
   );

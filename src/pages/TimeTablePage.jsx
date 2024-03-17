@@ -2,15 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../assets/arrow_bold.svg";
 import TimeTable from "../components/TimeTablePage/TimeTable";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { stops } from "../components/MainPage/stops";
+import { getAllTime } from "../services/api/stops";
 
 const TimeTablePage = ({ className }) => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
   return (
     <Div className={className}>
       <div className="wrapper">
         <StyledArrow onClick={() => navigate(-1)} />
-        <div className="title">포스코관</div>
+        <div className="title">{stops[id - 1].kor}</div>
       </div>
       <Line />
       <TimeTable />

@@ -19,6 +19,7 @@
     --theme_grey1_grey2: var(--grey1);
     --theme_grey2_grey3: var(--grey2);
     --theme_black_grey2: var(--black);
+    --theme_black_jade_night: var(--black);
   }
 
   .dark {
@@ -32,6 +33,7 @@
     --theme_white_grey3: var(--grey3_night);
     --theme_grey2_grey3: var(--grey3_night);
     --theme_black_grey2: var(--grey2);
+    --theme_black_jade_night: var(--jade_night);
   }
 }
 

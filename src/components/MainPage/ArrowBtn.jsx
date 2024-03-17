@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { themeState } from "../../services/store/theme";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 
 const ArrowBtn = ({ title }) => {

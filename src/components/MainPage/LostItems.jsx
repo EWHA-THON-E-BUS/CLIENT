@@ -2,17 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import ArrowBtn from "./ArrowBtn";
 
-const LostItems = () => {
+const LostItems = ({ list }) => {
   return (
     <Div>
       <ArrowBtn title={"최근 분실물"} />
 
       <Container>
-        <img className="lost-pic" src="" alt="" />
-        <img className="lost-pic" src="" alt="" />
-        <img className="lost-pic" src="" alt="" />
-        <img className="lost-pic" src="" alt="" />
-        <img className="lost-pic" src="" alt="" />
+        {list.map(el => {
+          return (
+            <img key={el.itemId} className="lost-pic" src={el.image} alt="" />
+          );
+        })}
       </Container>
     </Div>
   );
