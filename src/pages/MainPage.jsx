@@ -64,7 +64,12 @@ const MainPage = ({ className }) => {
             </div>
           )}
 
-          <div className="btn">
+          <div
+            className="btn"
+            onClick={() => {
+              navigate("/map");
+            }}
+          >
             정류장 전체 위치 보기
             <StyledArrow />
           </div>
