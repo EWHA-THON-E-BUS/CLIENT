@@ -40,7 +40,7 @@ const MyStopList = () => {
             />
           );
         })}
-
+        {pinnedStops.length === 0 && <div>내 정류장 추가하기</div>}
         {pinnedStops.length < 3 && (
           <img
             className="plus"
