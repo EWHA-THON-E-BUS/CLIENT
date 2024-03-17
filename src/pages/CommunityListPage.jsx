@@ -46,7 +46,7 @@ const CommunityListPage = () => {
             type={isNotice ? "notice" : isSuggest ? "suggest" : "appreciate"}
             item={el}
             isFirst={idx === 0}
-            key={0}
+            key={isNotice ? el.noticeId : el.postId}
           />
         ))}
       <br />

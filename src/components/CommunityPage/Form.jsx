@@ -13,11 +13,13 @@ const Form = () => {
   const onSubmit = () => {
     if (isNotice) {
       postNotice(post)
-        .then(res => console.log(res)) // nav(`/notice/${id}`)
+        .then(res => nav(`/notice/${res.data.noticeId}`))
         .catch(res => console.log(res));
     } else {
       postPost(isSuggest ? "suggestion" : "appreciation", post)
-        .then(res => console.log(res)) // nav(`/${isSuggest?'suggest':'appreciate'}/${id}`);
+        .then(res =>
+          nav(`/${isSuggest ? "suggest" : "appreciate"}/${res.data.postId}`),
+        )
         .catch(err => console.log(err));
     }
   };
@@ -82,7 +84,7 @@ const Input = styled.input`
 
 const Textarea = styled.textarea`
   width: calc(100% - 16px);
-  height: 60px;
+  min-height: 60px;
   color: var(--black);
   background-color: var(--grey1);
   resize: none;

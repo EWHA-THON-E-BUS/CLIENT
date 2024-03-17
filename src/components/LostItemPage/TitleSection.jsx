@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
+import { getMember } from "../../services/api/member";
 
 const TitleSection = ({ title, text, moveTo }) => {
   const nav = useNavigate();
+  useEffect(() => {
+    getMember()
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+  }, []);
   return (
     <Container $border={!(title === "분실물")}>
       <p>{title}</p>

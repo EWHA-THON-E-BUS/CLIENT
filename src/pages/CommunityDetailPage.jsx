@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DetailTopBar from "../components/LostItemPage/DetailTopBar";
-import profileimg from "../assets/profile_jade.svg";
+import profileimg from "../assets/profile.svg";
+import adminprofileimg from "../assets/profile_jade.svg";
 import { ReactComponent as EmptyHeart } from "../assets/heart_empty.svg";
 import { ReactComponent as FillHeart } from "../assets/heart_fill.svg";
 import { getNoticeDetail, deleteNotice } from "../services/api/notice";
@@ -14,6 +15,7 @@ const CommunityDetailPage = () => {
   const isNotice = window.location.pathname.includes("notice");
   const isSuggest = window.location.pathname.includes("suggest");
   const [item, setItem] = useState({});
+  const [trigger, setTrigger] = useState(0);
   useEffect(() => {
     if (isNotice) {
       getNoticeDetail(id)
@@ -24,7 +26,7 @@ const CommunityDetailPage = () => {
         .then(res => setItem(res.data))
         .catch(err => console.log(err));
     }
-  }, [isNotice, isSuggest, id]);
+  }, [isNotice, isSuggest, id, trigger]);
   const onDelete = () => {
     if (window.confirm("삭제하시겠습니까?")) {
       if (isNotice) {
@@ -40,40 +42,41 @@ const CommunityDetailPage = () => {
   };
   const handleHeart = () => {
     postHeart(id)
-      .then(res => console.log(res))
+      .then(res => setTrigger(trigger + 1))
       .catch(err => console.log(err));
   };
   return (
-    <Wrapper>
-      <DetailTopBar
-        title="건의해요 건의해요 건의해요 건의해요 건의해요건의해요"
-        backTo={isNotice ? "/notice" : isSuggest ? "/suggest" : "/appreciate"}
-        isMy={true}
-        onDelete={onDelete}
-      />
-      <Info>
-        <div className="img-circle">
-          <img src={profileimg} alt="profile" />
-        </div>
-        <p>관리자</p>
-        <p>0000-00-00</p>
-        <Heart onClick={handleHeart}>
-          {"12"}
-          {false ? <FillHeart /> : <EmptyHeart />}
-        </Heart>
-      </Info>
-      <Content>
-        국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여
-        국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다.
-        국무총리는 국회의 동의를 얻어 대통령이 임명한다. 한 회계연도를 넘어
-        계속하여 지출할 필요가 있을 때에는 정부는 연한을 정하여 계속비로서
-        국회의 의결을 얻어야 한다. 국무회의는 정부의 권한에 속하는 중요한 정책을
-        심의한다. 타인의 범죄행위로 인하여 생명·신체에 대한 피해를 받은 국민은
-        법률이 정하는 바에 의하여 국가로부터 구조를 받을 수 있다. 모든 국민은
-        직업선택의 자유를 가진다. 국회는 국가의 예산안을 심의·확정한다.
-        대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다.
-      </Content>
-    </Wrapper>
+    <>
+      {item.post && item.member && (
+        <Wrapper>
+          <DetailTopBar
+            title={item.post.title}
+            backTo={
+              isNotice ? "/notice" : isSuggest ? "/suggest" : "/appreciate"
+            }
+            isMy={item.member.isWriter}
+            onDelete={onDelete}
+          />
+          <Info>
+            <div className="img-circle">
+              <img
+                src={isNotice ? adminprofileimg : profileimg}
+                alt="profile"
+              />
+            </div>
+            <p>{isNotice ? "관리자" : "익명의 벗"}</p>
+            <p>{new Date(item.post.createdDate).toLocaleDateString()}</p>
+            {!isNotice && (
+              <Heart onClick={handleHeart}>
+                {item.heartCount}
+                {item.member.hasHeart ? <FillHeart /> : <EmptyHeart />}
+              </Heart>
+            )}
+          </Info>
+          <Content>{item.post.content}</Content>
+        </Wrapper>
+      )}
+    </>
   );
 };
 
