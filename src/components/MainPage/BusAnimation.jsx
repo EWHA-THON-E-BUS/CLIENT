@@ -4,7 +4,7 @@ import { ReactComponent as Bus } from "../../assets/bus_right.svg";
 import { useRecoilValue } from "recoil";
 import { themeState } from "../../services/store/theme";
 
-const BusAnimation = ({ className, isUp, time }) => {
+const BusAnimation = ({ isUp, time }) => {
   const bodyWidth = document.body.clientWidth;
   document.documentElement.style.setProperty("--body-width", `${bodyWidth}px`);
 
