@@ -14,6 +14,7 @@ import LoginLoadingPage from "./pages/LoginLoadingPage";
 import { PrivateRoute } from "./services/router/PrivateRoute";
 import { useEffect } from "react";
 import { dayState } from "./services/store/bus";
+import FullMapPage from "./pages/FullMapPage";
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
@@ -73,6 +74,7 @@ function App() {
         path="/"
         element={<MainPage className={theme === "LIGHT" ? "light" : "dark"} />}
       />
+      <Route path="/map" element={<FullMapPage />} />
       <Route
         path="/time-table/:id"
         element={

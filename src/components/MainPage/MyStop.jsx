@@ -7,6 +7,7 @@ import { getKorByEng } from "./bus_routes";
 import { stops } from "./stops";
 import { useRecoilState } from "recoil";
 import { selectedListState } from "../../services/store/stop";
+import LeftTime from "./LeftTime";
 const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
   const [selectedList, setSelectedList] = useRecoilState(selectedListState);
 
@@ -72,7 +73,13 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
             return (
               <div className="row">
                 <div className="stop">{getKorByEng(up.route)}</div>
-                <div className="time">2분 ({up.time.replace(/:00$/, "")})</div>
+                <div className="time">
+                  <LeftTime
+                    time={up.time}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  />
+                </div>
               </div>
             );
           })}
@@ -85,7 +92,11 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
               <div className="row">
                 <div className="stop">{getKorByEng(down.route)}</div>
                 <div className="time">
-                  2분 ({down.time.replace(/:00$/, "")})
+                  <LeftTime
+                    time={down.time}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  />
                 </div>
               </div>
             );
