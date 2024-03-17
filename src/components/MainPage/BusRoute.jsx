@@ -23,6 +23,9 @@ const BusRoute = ({ bus_route, isUp }) => {
       //일요일인 경우
       setDay("sunday");
     }
+
+    //test
+    setDay("weekday");
   }, []);
 
   return (

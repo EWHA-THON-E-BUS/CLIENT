@@ -5,8 +5,8 @@ import { useRecoilValue } from "recoil";
 import { themeState } from "../../services/store/theme";
 
 const BusAnimation = ({ isUp, time }) => {
-  const bodyWidth = document.body.clientWidth;
-  document.documentElement.style.setProperty("--body-width", `${bodyWidth}px`);
+  const rootWidth = document.getElementById("root").clientWidth;
+  document.documentElement.style.setProperty("--root-width", `${rootWidth}px`);
 
   const [animationProgress, setAnimationProgress] = useState(0);
   const [refresh, setRefresh] = useState(0);
@@ -115,7 +115,7 @@ const StyledBus = styled(Bus)`
 
   transform: translate(
     calc(
-      (var(--body-width) - 48px - 30px) * ${props => props.progressStatus} / 100
+      (var(--root-width) - 48px - 30px) * ${props => props.progressStatus} / 100
     ),
     -100%
   );
@@ -128,7 +128,7 @@ const StyledDownBus = styled(Bus)`
   //하행
   transform: translate(
       calc(
-        (var(--body-width) - 48px - 30px) * ${props => props.progressStatus} /
+        (var(--root-width) - 48px - 30px) * ${props => props.progressStatus} /
           100 * -1
       ),
       0%
