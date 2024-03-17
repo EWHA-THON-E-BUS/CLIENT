@@ -7,17 +7,30 @@ import { getKorByEng } from "../MainPage/bus_routes";
 
 const TimeTable = () => {
   const { id } = useParams();
-  console.log(id);
+
   const [downs, setDowns] = useState([]);
   const [ups, setUps] = useState([]);
+  const [closestUp, setClosestUp] = useState("");
+  const [closestDown, setClosestDown] = useState("");
 
   const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
     getAllTime(id).then(res => {
-      console.log(res);
       setDowns(res.data.downs);
       setUps(res.data.ups);
+      res.data.closestDown && setClosestDown(res.data.closestDown.time);
+      res.data.closestUp && setClosestUp(res.data.closestUp.time);
+      // setDowns([
+      //   { route: "HANWOORI", time: "12:31" },
+      //   { route: "HANWOORI", time: "12:32" },
+      // ]);
+      // setUps([
+      //   { route: "HANWOORI", time: "12:30" },
+      //   { route: "HANWOORI", time: "12:31" },
+      // ]);
+      // setClosestDown("12:32");
+      // setClosestUp("12:31");
 
       if (!res.data.downs.length || !res.data.ups.length) {
         setIsEmpty(true);
@@ -38,13 +51,13 @@ const TimeTable = () => {
           <tbody>
             {ups.map((up, index) => (
               <tr key={index}>
-                <td>
+                <Container isClosest={up.time === closestUp}>
                   <div className="container">
                     <div className="stop">{getKorByEng(up.route)}</div>
                     <div className="time">{up.time.replace(/:00$/, "")}</div>
                   </div>
-                </td>
-                <td>
+                </Container>
+                <Container isClosest={downs[index].time === closestDown}>
                   {downs[index] && (
                     <div className="container">
                       <div className="stop">
@@ -55,7 +68,7 @@ const TimeTable = () => {
                       </div>
                     </div>
                   )}
-                </td>
+                </Container>
               </tr>
             ))}
           </tbody>
@@ -126,4 +139,8 @@ const Empty = styled.div`
   text-align: center;
 
   background: var(--theme_bg);
+`;
+
+const Container = styled.td`
+  background: ${props => props.isClosest && "var(--theme_jade)"};
 `;
