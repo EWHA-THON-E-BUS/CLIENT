@@ -13,10 +13,13 @@ import { ReactComponent as Arrow } from "../assets/arrow_light.svg";
 import { getMainData } from "../services/api/main";
 import { getPinnedStops } from "../services/api/stops";
 import { isLoginState } from "../services/store/auth";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = ({ className }) => {
   const theme = useRecoilValue(themeState);
   const isLogin = useRecoilValue(isLoginState);
+
+  const navigate = useNavigate();
 
   const [notice, setNotice] = useState([]);
   const [items, setItems] = useState([]);
@@ -42,7 +45,12 @@ const MainPage = ({ className }) => {
       <Header isTheme={true} />
 
       <div className="padding">
-        <NoticeBanner notice={notice[0]} />
+        <NoticeBanner
+          notice={notice[0]}
+          onClick={() => {
+            navigate("/notice");
+          }}
+        />
 
         <Container>
           {theme === "LIGHT" ? (
@@ -83,6 +91,7 @@ export default MainPage;
 const Div = styled.div`
   font-variant-numeric: lining-nums tabular-nums;
   width: 100%;
+  min-height: 100svh;
   background: var(--theme_bg);
   color: var(--theme_font);
 

@@ -1,9 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const NoticeBanner = ({ notice }) => {
+  const navigate = useNavigate();
   return (
-    <Div>
+    <Div
+      onClick={() => {
+        navigate("/notice");
+      }}
+    >
       {notice ? (
         <>
           <div className="date">{notice.createdDate.split("T")[0]}</div>

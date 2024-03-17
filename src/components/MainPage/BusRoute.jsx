@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import BusAnimation from "./BusAnimation";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { getTimetablebyDay } from "./bus_routes";
+import { dayState } from "../../services/store/bus";
 
 const BusRoute = ({ bus_route, isUp }) => {
   const navigate = useNavigate();
+  const [day, setDay] = useRecoilState(dayState);
+
+  const now = new Date();
+
+  useEffect(() => {
+    if (now.getDay() === 6) {
+      //토요일인 경우
+      setDay("saturday");
+    } else if (now.getDay > 0) {
+      //평일일 경우
+      setDay("weekday");
+    } else {
+      //일요일인 경우
+      setDay("sunday");
+    }
+
+    //test
+    setDay("weekday");
+  }, []);
+
   return (
     <>
       <Line>
@@ -21,23 +44,11 @@ const BusRoute = ({ bus_route, isUp }) => {
 
         <div className="bus">
           {isUp
-            ? bus_route.up_start_time.map(time => {
-                return (
-                  <BusAnimation
-                    className={bus_route.id}
-                    isUp={isUp}
-                    time={time}
-                  />
-                );
+            ? getTimetablebyDay(day, isUp, bus_route.id).map(time => {
+                return <BusAnimation isUp={isUp} time={time} />;
               })
-            : bus_route.down_start_time.map(time => {
-                return (
-                  <BusAnimation
-                    className={bus_route.id}
-                    isUp={isUp}
-                    time={time}
-                  />
-                );
+            : getTimetablebyDay(day, isUp, bus_route.id).map(time => {
+                return <BusAnimation isUp={isUp} time={time} />;
               })}
         </div>
       </Line>
