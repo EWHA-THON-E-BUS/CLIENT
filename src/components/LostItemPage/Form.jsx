@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { ReactComponent as Add } from "../../assets/plus.svg";
@@ -7,11 +8,12 @@ import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/ko";
+import { postItem } from "../../services/api/item";
 
 const Form = () => {
+  const nav = useNavigate();
   const [post, setPost] = useState({
     title: "",
-    image: "",
     foundDate: "",
     foundTime: "",
     foundLocation: "",
@@ -19,8 +21,8 @@ const Form = () => {
   });
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState({
-    imagePreviewUrl: "",
-    imageBlob: null,
+    preview: "",
+    file: null,
   });
   const inputRef = useRef(null);
   let reader = new FileReader();
@@ -30,22 +32,43 @@ const Form = () => {
     if (file) {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        setImage({ imagePreviewUrl: reader.result, imageBlob: file });
+        setImage({ preview: reader.result, file: file });
         e.target.value = "";
       };
     }
   };
-  const resetImage = () =>
-    setImage({
-      imagePreviewUrl: "",
-      imageBlob: null,
-    });
+  const resetImage = () => setImage({ preview: "", file: null });
+  let Formdata = require("form-data");
+  const data = new Formdata();
   const onSubmit = () => {
     console.log(post);
-    // 이미지 s3 url 변환
-    // .then(res => setPost({...post, image: res.url}));
-    // .then(서버에 post 요청)
-    // nav(`/lost-item/${id}`);
+    if (
+      post.title !== "" &&
+      post.foundDate !== "" &&
+      post.foundTime !== "" &&
+      post.foundLocation !== "" &&
+      post.depository !== "" &&
+      image.file !== null
+    ) {
+      data.append("image", image.file);
+      data.append(
+        "dto",
+        new Blob(
+          [
+            JSON.stringify({
+              ...post,
+              foundDate: post.foundDate.split("T", 1)[0],
+            }),
+          ],
+          { type: "application/json" },
+        ),
+      );
+      postItem(data)
+        .then(res => nav(`/lost-item/${res.data.itemId}`))
+        .catch(err => console.log(err));
+    } else {
+      alert("모든 항목을 전부 작성하였는지 확인해주세요!");
+    }
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
@@ -68,8 +91,7 @@ const Form = () => {
         {
           title: "발견 위치",
           placeholder: "e.g. 셔틀 셋째 줄 의자 아래",
-          value: post.foundLocation,
-          onChange: null,
+          key: "foundLocation",
         },
         {
           title: "맡긴 위치",
@@ -107,7 +129,7 @@ const Form = () => {
       <Field $isimage={true}>
         <div className="inner">
           <p>분실물의 사진을 추가해주세요</p>
-          {image.imagePreviewUrl ? (
+          {image.preview ? (
             <Delete onClick={resetImage} />
           ) : (
             <Add onClick={() => inputRef.current.click()} />
@@ -120,9 +142,9 @@ const Form = () => {
           className="image-input"
           onChange={handleImage}
         />
-        {image.imagePreviewUrl && (
+        {image.preview && (
           <div className="img-rect">
-            <img src={image.imagePreviewUrl} alt="lost-item-new-image" />
+            <img src={image.preview} alt="lost-item-new-image" />
           </div>
         )}
       </Field>
@@ -134,7 +156,12 @@ const Form = () => {
         open={isOpen}
         onClose={() => setIsOpen(false)}
         value={post.foundDate}
-        onChange={value => setPost({ ...post, foundDate: value })}
+        onChange={value =>
+          setPost({
+            ...post,
+            foundDate: new Date(value).toISOString(),
+          })
+        }
       />
     </LocalizationProvider>
   );

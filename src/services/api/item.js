@@ -1,4 +1,5 @@
 import client from "./client";
+import axios from "axios";
 
 export const getItems = async search => {
   try {
@@ -22,7 +23,11 @@ export const getItemDetail = async itemsId => {
 
 export const postItem = async post => {
   try {
-    const response = await client.post(`/items`, post);
+    const response = await client.post(`/items`, post, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error);
@@ -35,26 +40,5 @@ export const deleteItem = async itemsId => {
     return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error);
-  }
-};
-
-export const getS3ImgUrl = async imgMeta => {
-  let uploadURL = "";
-  const endPoint = process.env.REACT_APP_S3_API_ENDPOINT;
-  try {
-    const res = await axios.post(endPoint, {
-      fileName: "qwefdsac/" + imgMeta.name,
-    });
-
-    uploadURL = res.data;
-    const headers = {
-      "Content-Type": imgMeta.type,
-    };
-    const upload = await axios.put(uploadURL, imgMeta, {
-      headers,
-    });
-    return uploadURL.split("?")[0];
-  } catch (err) {
-    console.log(err);
   }
 };

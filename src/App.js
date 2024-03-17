@@ -63,6 +63,10 @@ function App() {
     <Routes>
       <Route element={<PrivateRoute />}>
         {/* 로그인 해야 접근 가능한 페이지 */}
+        <Route path="/lost-item/new" element={<LostItemPostPage />} />
+        <Route path="/notice/new" element={<CommunityPostPage />} />
+        <Route path="/suggest/new" element={<CommunityPostPage />} />
+        <Route path="/appreciate/new" element={<CommunityPostPage />} />
       </Route>
 
       <Route
@@ -79,16 +83,12 @@ function App() {
       <Route path="/login/loading" element={<LoginLoadingPage />} />
       <Route path="/lost-item" element={<LostItemListPage />} />
       <Route path="/lost-item/:id" element={<LostItemDetailPage />} />
-      <Route path="/lost-item/new" element={<LostItemPostPage />} />
       <Route path="/notice" element={<CommunityListPage />} />
       <Route path="/notice/:id" element={<CommunityDetailPage />} />
-      <Route path="/notice/new" element={<CommunityPostPage />} />
       <Route path="/suggest" element={<CommunityListPage />} />
       <Route path="/suggest/:id" element={<CommunityDetailPage />} />
-      <Route path="/suggest/new" element={<CommunityPostPage />} />
       <Route path="/appreciate" element={<CommunityListPage />} />
       <Route path="/appreciate/:id" element={<CommunityDetailPage />} />
-      <Route path="/appreciate/new" element={<CommunityPostPage />} />
     </Routes>
   );
 }

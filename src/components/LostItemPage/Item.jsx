@@ -2,16 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export const item = {
-  itemId: 1,
-  writerRole: "ADMIN",
-  title: "분실물 이름 분실물 이름 분실물 이름 분실물 이름이름이름이름이름",
-  image:
-    "https://img.freepik.com/free-photo/cute-puppy-sitting-in-grass-enjoying-nature-playful-beauty-generated-by-artificial-intelligence_188544-84973.jpg",
-  foundDate: "2024-03-15",
-};
-
-const Item = () => {
+const Item = ({ item }) => {
   const { itemId, writerRole, title, image, foundDate } = item;
   const nav = useNavigate();
   return (

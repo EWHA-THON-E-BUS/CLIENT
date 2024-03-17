@@ -10,8 +10,8 @@ import { isLoginState } from "../../services/store/auth";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({ isTheme }) => {
-  const [theme, setTheme] = useRecoilState(themeState);
   const isLogin = useRecoilValue(isLoginState);
+  const [theme, setTheme] = useRecoilState(themeState);
 
   const navigate = useNavigate();
 
@@ -31,6 +31,8 @@ const Header = ({ isTheme }) => {
     localStorage.setItem("theme", "DARK");
     setTheme("DARK");
   };
+
+  const nav = useNavigate();
 
   return (
     <Div>
@@ -89,6 +91,7 @@ const Div = styled.div`
 
     .theme-btn {
       padding-top: 8px;
+      cursor: pointer;
     }
   }
 
@@ -100,5 +103,6 @@ const Div = styled.div`
     font-size: 14px;
 
     padding-bottom: 7px;
+    cursor: pointer;
   }
 `;

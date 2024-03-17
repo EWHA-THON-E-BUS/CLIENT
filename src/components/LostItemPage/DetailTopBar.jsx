@@ -4,15 +4,17 @@ import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/arrow_bold.svg";
 import { ReactComponent as Delete } from "../../assets/delete.svg";
 
-const DetailTopBar = ({ title, backTo, isMy, onDelete }) => {
+const DetailTopBar = ({ title, isMy, onDelete }) => {
   const nav = useNavigate();
   return (
     <Title>
       <div className="inner">
-        <Arrow className="arrow" onClick={() => nav(backTo)} />
+        <Arrow className="arrow" onClick={() => nav(-1)} />
         <p>{title}</p>
       </div>
-      {isMy && <Delete className="delete" onClick={onDelete} />}
+      {isMy && !window.location.pathname.includes("lost-item") && (
+        <Delete className="delete" onClick={onDelete} />
+      )}
     </Title>
   );
 };
