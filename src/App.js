@@ -20,6 +20,15 @@ function App() {
   const [theme, setTheme] = useRecoilState(themeState);
   const day = useRecoilValue(dayState);
   //평일은 21시부터 다크모드, 토요일,일요일은 19시부터 다크모드
+
+  let metaThemeColor = "#fff";
+  if (theme === "DARK") {
+    metaThemeColor = "#07011d";
+  }
+
+  const metaTheme = document.querySelector("meta[name='theme-color']");
+  metaTheme.setAttribute("content", metaThemeColor);
+
   const now = new Date();
 
   const handleThemeSetTime = (hour, min) => {
