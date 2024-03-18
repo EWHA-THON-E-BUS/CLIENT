@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { getAllTime } from "../../services/api/stops";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ const TimeTable = () => {
   const [closestDown, setClosestDown] = useState("");
 
   const [isEmpty, setIsEmpty] = useState(false);
+  const closestUpRef = useRef(null);
 
   useEffect(() => {
     getAllTime(id).then(res => {
@@ -39,6 +40,15 @@ const TimeTable = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (closestUpRef.current) {
+      closestUpRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [closestUp]);
+
   return (
     <>
       {!isEmpty ? (
@@ -52,7 +62,10 @@ const TimeTable = () => {
           <tbody>
             {ups.map((up, index) => (
               <tr key={index}>
-                <Container isClosest={up.time === closestUp}>
+                <Container
+                  ref={up.time === closestUp ? closestUpRef : null}
+                  isClosest={up.time === closestUp}
+                >
                   <div className="container">
                     <div className="stop">{getKorByEng(up.route)}</div>
                     <div className="time">{up.time.replace(/:00$/, "")}</div>
