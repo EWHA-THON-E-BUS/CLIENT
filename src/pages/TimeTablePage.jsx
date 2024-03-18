@@ -12,11 +12,14 @@ const TimeTablePage = ({ className }) => {
 
   return (
     <Div className={className}>
-      <div className="wrapper">
-        <StyledArrow onClick={() => navigate(-1)} />
-        <div className="title">{stops[id - 1].kor}</div>
+      <div className="header">
+        <div className="wrapper">
+          <StyledArrow onClick={() => navigate(-1)} />
+          <div className="title">{stops[id - 1].kor}</div>
+        </div>
+        <Line />
       </div>
-      <Line />
+      <div className="gap" style={{ height: "23px" }} />
       <TimeTable />
     </Div>
   );
@@ -33,11 +36,22 @@ const Div = styled.div`
   padding: 28px 24px 0px;
   box-sizing: border-box;
 
+  .header {
+    width: 100svw;
+    padding: 28px 24px 0px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--theme_bg);
+  }
+
   .wrapper {
     display: flex;
     align-items: center;
     position: relative;
   }
+
   .title {
     position: absolute;
     left: 50%;
