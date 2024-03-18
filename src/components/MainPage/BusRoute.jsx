@@ -16,7 +16,7 @@ const BusRoute = ({ bus_route, isUp }) => {
     if (now.getDay() === 6) {
       //토요일인 경우
       setDay("saturday");
-    } else if (now.getDay > 0) {
+    } else if (now.getDay() > 0) {
       //평일일 경우
       setDay("weekday");
     } else {
