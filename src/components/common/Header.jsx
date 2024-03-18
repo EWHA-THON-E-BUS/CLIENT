@@ -9,7 +9,7 @@ import { themeState } from "../../services/store/theme";
 import { isLoginState } from "../../services/store/auth";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ isTheme }) => {
+const Header = ({ isTheme, isBasic = false }) => {
   const isLogin = useRecoilValue(isLoginState);
   const [theme, setTheme] = useRecoilState(themeState);
 
@@ -61,15 +61,18 @@ const Header = ({ isTheme }) => {
       ) : (
         <img src={logo_padding} alt="" onClick={() => navigate("/")} />
       )}
-
-      {!isLogin ? (
-        <div className="login" onClick={() => navigate("/login")}>
-          로그인
-        </div>
-      ) : (
-        <div className="login" onClick={handleLogout}>
-          로그아웃
-        </div>
+      {!isBasic && (
+        <>
+          {!isLogin ? (
+            <div className="login" onClick={() => navigate("/login")}>
+              로그인
+            </div>
+          ) : (
+            <div className="login" onClick={handleLogout}>
+              로그아웃
+            </div>
+          )}
+        </>
       )}
     </Div>
   );
