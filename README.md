@@ -24,7 +24,7 @@
 | [Soyeon-Cha](https://github.com/Soyeon-Cha) | [xyzwv](https://github.com/xyzwv) | [songing01](https://github.com/songing01) | [529539](https://github.com/529539) | [s_yeon.723](https://www.instagram.com/s_yeon.723)
 
 ## 💚 기술 스택
-✔️ 
-✔️ 
-✔️ 
-✔️ 
+✔️ React + javascript
+✔️ styled-components
+✔️ recoil
+✔️ axios
