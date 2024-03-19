@@ -5,10 +5,12 @@ import Header from "../components/common/Header";
 
 const FullMapPage = () => {
   return (
-    <Div>
+    <>
       <Header isBasic={true} />
-      <img src={fullmap} className="map" />
-    </Div>
+      <Div>
+        <img src={fullmap} className="map" />
+      </Div>
+    </>
   );
 };
 
