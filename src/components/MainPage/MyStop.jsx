@@ -166,4 +166,9 @@ const Container = styled.div`
     justify-content: space-between;
     width: 100%;
   }
+
+  .stop {
+    overflow: hidden;
+    word-break: keep-all;
+  }
 `;
