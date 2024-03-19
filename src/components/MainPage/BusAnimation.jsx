@@ -40,7 +40,6 @@ const BusAnimation = ({ isUp, time }) => {
       // 시간이 아직 지나지 않았을 경우
       const timeoutId = setTimeout(() => {
         // 지정된 시간이 지난 후에 useEffect 재실행 및 애니메이션 시작
-        setRefresh(1);
       }, timeDiff);
 
       return () => clearTimeout(timeoutId); // cleanup 함수에서 타임아웃 제거
@@ -73,6 +72,22 @@ const BusAnimation = ({ isUp, time }) => {
 
     return () => clearInterval(intervalId); // 컴포넌트가 언마운트되면 interval 제거
   }, [refresh, theme]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        // 포그라운드로 돌아왔을 때 timeDiff 재계산 및 애니메이션 실행
+        setRefresh(prev => prev + 1);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   return (
     <>
       {animationProgress > 0 &&
