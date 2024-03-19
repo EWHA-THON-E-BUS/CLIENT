@@ -33,7 +33,7 @@ const Div = styled.div`
   background: var(--theme_bg);
   color: var(--theme_font);
 
-  padding: 28px 24px 0px;
+  padding: 28px 24px 100px;
   box-sizing: border-box;
 
   .header {
