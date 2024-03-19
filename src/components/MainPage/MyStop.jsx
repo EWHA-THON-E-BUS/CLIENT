@@ -8,6 +8,7 @@ import { stops } from "./stops";
 import { useRecoilState } from "recoil";
 import { selectedListState } from "../../services/store/stop";
 import LeftTime from "./LeftTime";
+import { useNavigate } from "react-router-dom";
 const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
   const [selectedList, setSelectedList] = useRecoilState(selectedListState);
 
@@ -15,6 +16,8 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
   const [downs, setDowns] = useState([]);
 
   const [refresh, setRefresh] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     //렌더링 시 현재 핀되어있는 정류장 배열에 반영
@@ -67,7 +70,7 @@ const MyStop = ({ stopId, pinnedStops, setPinnedStops }) => {
         <img src={refresh_svg} onClick={() => setRefresh(refresh + 1)} />
       </Top>
 
-      <Bottom>
+      <Bottom onClick={() => navigate(`/time-table/${stopId}`)}>
         <Container>
           {ups.map(up => {
             return (
